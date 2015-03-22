@@ -1605,9 +1605,8 @@ use File::Glob qw(:case);
 
     'warnings' => {
         'FILES'      => q[
-                 lib/warnings
-                 lib/warnings.{pm,t}
-                 regen/warnings.pl
+                 ext/warnings.{pm,t}
+                 ext/warnings_c.PL
                  t/lib/warnings
         ],
     },
