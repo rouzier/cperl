@@ -12173,11 +12173,12 @@ Perl_newATTRSUB_x(pTHX_ I32 floor, OP *o, OP *proto, OP *attrs,
     assert(!cv || evanescent || SvREFCNT((SV*)cv) != 0);
     if (!evanescent) {
 #ifdef PERL_DEBUG_READONLY_OPS
-    if (slab)
-	Slab_to_ro(slab);
+        if (slab)
+            Slab_to_ro(slab);
 #endif
-    if (cv && name && block && CvOUTSIDE(cv) && !CvEVAL(CvOUTSIDE(cv)))
-	pad_add_weakref(cv);
+        if (cv && !SvIS_FREED(cv) && name && block &&
+            CvOUTSIDE(cv) && !CvEVAL(CvOUTSIDE(cv)))
+            pad_add_weakref(cv);
     }
     return cv;
 }
@@ -12581,7 +12582,7 @@ Perl_newXS_len_flags(pTHX_ const char *name, STRLEN len,
     
         if (!(flags & GV_ANON) && cv)		/* must reuse cv if autoloaded */
             cv_undef(cv);
-        else {
+        } else {
             cv = MUTABLE_CV(newSV_type(SVt_PVCV));
             if (name) {
                 GvCV_set(gv,cv);
@@ -12627,7 +12628,8 @@ Perl_newXS_len_flags(pTHX_ const char *name, STRLEN len,
         assert(cv);
         assert(evanescent || SvREFCNT((SV*)cv) != 0);
 
-        if (!evanescent) sv_setpv(MUTABLE_SV(cv), proto);
+        if (!evanescent && !SvIS_FREED(cv)) /* not freed by process_special_blocks */
+            sv_setpv(MUTABLE_SV(cv), proto);
         if (interleave) LEAVE;
         assert(evanescent || SvREFCNT((SV*)cv) != 0);
         return cv;
