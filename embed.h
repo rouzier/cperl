@@ -206,6 +206,7 @@
 #define get_op_descs()		Perl_get_op_descs(aTHX)
 #define get_op_names()		Perl_get_op_names(aTHX)
 #define get_ppaddr()		Perl_get_ppaddr(aTHX)
+#define get_pv(a,b)		Perl_get_pv(aTHX_ a,b)
 #define get_sv(a,b)		Perl_get_sv(aTHX_ a,b)
 #define get_svn_flags(a,b,c)	Perl_get_svn_flags(aTHX_ a,b,c)
 #define get_vtbl(a)		Perl_get_vtbl(aTHX_ a)
@@ -836,9 +837,7 @@
 #define sv_pvn(a,b)		Perl_sv_pvn(aTHX_ a,b)
 #endif
 #define sv_pvn_force_flags(a,b,c)	Perl_sv_pvn_force_flags(aTHX_ a,b,c)
-#ifndef NO_MATHOMS
 #define sv_pvn_nomg(a,b)	Perl_sv_pvn_nomg(aTHX_ a,b)
-#endif
 #ifndef NO_MATHOMS
 #define sv_pvutf8n(a,b)		Perl_sv_pvutf8n(aTHX_ a,b)
 #endif
@@ -882,7 +881,9 @@
 #define sv_setuv_mg(a,b)	Perl_sv_setuv_mg(aTHX_ a,b)
 #define sv_string_from_errnum(a,b)	Perl_sv_string_from_errnum(aTHX_ a,b)
 #define sv_tainted(a)		Perl_sv_tainted(aTHX_ a)
+#ifndef NO_MATHOMS
 #define sv_true(a)		Perl_sv_true(aTHX_ a)
+#endif
 #define sv_uncow(a,b)		Perl_sv_uncow(aTHX_ a,b)
 #define sv_uni_display(a,b,c,d)	Perl_sv_uni_display(aTHX_ a,b,c,d)
 #define sv_unmagic(a,b)		Perl_sv_unmagic(aTHX_ a,b)
@@ -2338,6 +2339,7 @@
 #  define perl_get_av(a,b)		get_av(a,b)
 #  define perl_get_cv(a,b)		get_cv(a,b)
 #  define perl_get_hv(a,b)		get_hv(a,b)
+#  define perl_get_pv(a,b)		get_pv(a,b)
 #  define perl_get_sv(a,b)		get_sv(a,b)
 #  define perl_init_i18nl10n(a)		init_i18nl10n(a)
 #  define perl_init_i18nl14n(a)		init_i18nl14n(a)
