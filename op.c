@@ -11220,6 +11220,7 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv, bool meth)
             OpLASTSIB_set(OpSIBLING(defav), list);
         }
         finalize_op(list);
+        o->op_next = list;
     }
 
     /* splice body, skip and free the gv */
