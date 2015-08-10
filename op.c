@@ -3893,6 +3893,8 @@ examine an optree to determine whether it's in-lineable.
 In contrast to op_const_sv allow short op sequences which are not
 constant folded.
 max 10 ops, no new pad, no intermediate return, no recursion, ...
+no call-by-ref: $_[i] aelemfast(*_) or aelem rv2av or multideref($_[$x])
+TODO later: call-by-ref, new lexicals
 
 =cut
 */
@@ -3919,11 +3921,11 @@ S_cv_check_inline(pTHX_ const OP *o, CV *compcv)
         i++;
 
         if (i > PERL_MAX_INLINE_OPS) return FALSE;
-	if (type == OP_NEXTSTATE || type == OP_DBSTATE
+	else if (type == OP_NEXTSTATE || type == OP_DBSTATE
             || type == OP_NULL   || type == OP_LINESEQ
             || type == OP_PUSHMARK)
             continue;
-	if (   type == OP_RETURN || type == OP_GOTO
+	else if (type == OP_RETURN    || type == OP_GOTO
             || type == OP_CALLER || type == OP_WARN
             || type == OP_DIE    || type == OP_RESET
             || type == OP_RUNCV  || type == OP_PADRANGE)
@@ -3935,8 +3937,36 @@ S_cv_check_inline(pTHX_ const OP *o, CV *compcv)
 #endif
 	else if (type == OP_LEAVESUB)
 	    break;
+        else if (type == OP_AELEMFAST) {
+            if (strEQ(GvNAME(cGVOPo_gv), "_")) {
+                DEBUG_k(deb("check_inline: skip call-by-ref aelemfast($_[])\n"));
+                return FALSE;
+            }
+        }
+        else if (type == OP_MULTIDEREF) {
+            UNOP_AUX_item *items = cUNOP_AUXo->op_aux;
+            UV actions = items->uv;
+            items++;
+            if ((actions & MDEREF_ACTION_MASK) == MDEREF_AV_padav_aelem) {
+                PADOFFSET off = items->pad_offset;
+                PADLIST * const padlist = CvPADLIST(compcv);
+                PADNAME * pad = padnamelist_fetch(PadlistNAMES(padlist), off);
+                if (PadnameLEN(pad) == 1 && *PadnamePV(pad) == '_') {
+                    DEBUG_k(deb("check_inline: skip call-by-ref multideref($_[])\n"));
+                    return FALSE;
+                }
+            }
+            else if ((actions & MDEREF_ACTION_MASK) == MDEREF_AV_gvav_aelem) {
+                GV *gv = (GV*)UNOP_AUX_item_sv(items);
+                if (GvNAMELEN(gv) == 1 && *GvNAME(gv) == '_') {
+                    DEBUG_k(deb("check_inline: skip call-by-ref multideref($_[])\n"));
+                    return FALSE;
+                }
+            }
+        }
         /* recursive? test please */
 	else if (type == OP_ENTERSUB && OpFIRST(o) == firstop) {
+            DEBUG_k(deb("check_inline: skip recursion\n"));
 	    return FALSE;
 	}
     }
@@ -11181,11 +11211,11 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv, bool meth)
     }
 #endif
     /* handle optional args:
-          pushmark args gv entersub body leavesub NULL
-       => pushmark gv rv2av args push enter body leave */
+          pushmark args* gv null* entersub body leavesub NULL
+       => pushmark gv rv2av args* push enter body leave */
     arg = o->op_next;
 #ifndef PERL_FREE_NULLOPS
-    /* ignore optimized away null args */
+    /* ignore nulls between gv and entersub */
     for (; arg->op_next && OP_TYPE_IS(arg, OP_NULL); arg = arg->op_next)
         ;
 #endif
@@ -11211,6 +11241,7 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv, bool meth)
         /* walk the args in siblings/kids order */
         for (; o->op_next && o->op_next->op_next != cvop; o = OpSIBLING(o)) {
 #ifndef PERL_FREE_NULLOPS
+            /* ignore nulls between gv and entersub */
             if (OP_TYPE_IS(o, OP_GV)) {
                 for (; o->op_next && OP_TYPE_IS(o->op_next, OP_NULL); o=o->op_next);
                 if (o->op_next == cvop) break;
