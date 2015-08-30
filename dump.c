@@ -619,6 +619,74 @@ Perl_sv_peek(pTHX_ SV *sv)
     return SvPV_nolen(t);
 }
 
+char *
+Perl_op_native_peek(pTHX_ const OP* o)
+{
+    dVAR;
+    SV * const t = sv_newmortal();
+    U32 type;
+    SV* sv;
+
+    sv_setpvs(t, "");
+    if (!o) {
+	sv_catpv(t, "VOID");
+        return SvPV_nolen(t);
+    }
+    type = o->op_type;
+    sv = cSVOPo_sv;
+    switch (type) {
+    case OP_INT_CONST:
+        Perl_sv_catpvf(aTHX_ t, "%"IVdf":int", (IV)sv);
+        break;
+    case OP_INT_PADSV:
+        if (sv && SvANY(sv)) {
+            assert(!SvNATIVE(sv));
+            Perl_sv_catpvf(aTHX_ t, "%"IVdf":int", SvIVX(sv));
+        }
+        else
+            Perl_sv_catpvf(aTHX_ t, ":int");
+        break;
+    case OP_UINT_CONST:
+        Perl_sv_catpvf(aTHX_ t, "%"UVuf":uint", (UV)sv);
+        break;
+    case OP_UINT_PADSV:
+        if (sv && SvANY(sv)) {
+            assert(!SvNATIVE(sv));
+            Perl_sv_catpvf(aTHX_ t, "%"UVuf":uint", SvUVX(sv));
+        } else
+            Perl_sv_catpvf(aTHX_ t, ":uint");
+        break;
+    case OP_NUM_CONST: {
+	STORE_LC_NUMERIC_UNDERLYING_SET_STANDARD();
+	Perl_sv_catpvf(aTHX_ t, "(%"NVgf")", PTR2NV(sv));
+	RESTORE_LC_NUMERIC_UNDERLYING();
+        break;
+    }
+    case OP_NUM_PADSV:
+        if (sv && SvANY(sv)) {
+            STORE_LC_NUMERIC_UNDERLYING_SET_STANDARD();
+            assert(!SvNATIVE(sv));
+            Perl_sv_catpvf(aTHX_ t, "%"NVgf":num", SvNVX(sv));
+            RESTORE_LC_NUMERIC_UNDERLYING();
+        } else
+            Perl_sv_catpvf(aTHX_ t, ":num");
+        break;
+    case OP_STR_CONST:
+        Perl_sv_catpvf(aTHX_ t, "\"%s\":str", (char*)sv);
+        break;
+    case OP_STR_PADSV:
+        if (sv && SvANY(sv)) {
+            assert(!SvNATIVE(sv));
+            Perl_sv_catpvf(aTHX_ t, "\"%s\":str", SvPVX_const(sv));
+        } else
+            Perl_sv_catpvf(aTHX_ t, ":str");
+        break;
+    default:
+        Perl_die(aTHX_ "Not a native type op %s\n", OP_NAME(o));
+    }
+    return SvPV_nolen(t);
+}
+
 /*
 =head1 Debugging Utilities
 */
@@ -1399,7 +1467,7 @@ S_do_op_dump_bar(pTHX_ I32 level, UV bar, PerlIO *file, const OP *o, const CV *c
             S_opdump_indent(aTHX_ o, level+1, (bar << 1), file,
                                     "%" UVuf " => 0x%" UVxf "\n",
                                     i, items[i].uv);
-	break;
+        break;
     }
 
     case OP_MULTICONCAT:
@@ -1437,10 +1505,10 @@ S_do_op_dump_bar(pTHX_ I32 level, UV bar, PerlIO *file, const OP *o, const CV *c
 	S_opdump_indent(aTHX_ o, level, bar, file, "RCLASS = %s\n",
                         SvPEEK(cMETHOPx_rclass(o)));
 #endif
-	break;
+        break;
     case OP_NULL:
-	if (o->op_targ != OP_NEXTSTATE && o->op_targ != OP_DBSTATE)
-	    break;
+        if (o->op_targ != OP_NEXTSTATE && o->op_targ != OP_DBSTATE)
+            break;
 	/* FALLTHROUGH */
     case OP_NEXTSTATE:
     case OP_DBSTATE:
@@ -1572,6 +1640,7 @@ S_do_op_dump_bar(pTHX_ I32 level, UV bar, PerlIO *file, const OP *o, const CV *c
                             SVfARG(label), PTR2UV(cPVOPo->op_pv));
             break;
         }
+        break;
 
     case OP_TRANS:
     case OP_TRANSR:
@@ -1612,7 +1681,18 @@ S_do_op_dump_bar(pTHX_ I32 level, UV bar, PerlIO *file, const OP *o, const CV *c
         }
         break;
 
-
+    case OP_INT_CONST:
+    case OP_UINT_CONST:
+    case OP_NUM_CONST:
+    case OP_STR_CONST:
+    case OP_INT_PADSV:
+    case OP_UINT_PADSV:
+    case OP_NUM_PADSV:
+    case OP_STR_PADSV:
+        assert(o->op_private & OPpCONST_UNBOXED);
+        S_opdump_indent(aTHX_ o, level, bar, file,
+                        "VALUE = %s\n", op_native_peek(o));
+        break;
     default:
 	break;
     }
@@ -3676,6 +3756,17 @@ Perl_debop(pTHX_ const OP *o)
                 SVfARG(gv_display(cGVOPo_gv)));
 	break;
 
+    case OP_INT_CONST:
+    case OP_UINT_CONST:
+    case OP_NUM_CONST:
+    case OP_STR_CONST:
+        PerlIO_printf(Perl_debug_log, "(%s)", op_native_peek(o));
+        break;
+
+    case OP_INT_PADSV:
+    case OP_UINT_PADSV:
+    case OP_NUM_PADSV:
+    case OP_STR_PADSV:
     case OP_PADSV:
     case OP_PADAV:
     case OP_PADHV:
@@ -3742,6 +3833,10 @@ Perl_debop(pTHX_ const OP *o)
     default:
 	break;
     }
+
+    if ((o->op_private & OPpBOXRET) && OP_HAS_BOXRET(o))
+        PerlIO_printf(Perl_debug_log, " (BOX)");
+
     PerlIO_printf(Perl_debug_log, "\n");
     return 0;
 }
