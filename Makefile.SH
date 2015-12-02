@@ -490,8 +490,7 @@ shextract=`SH_to_target $SH`
 ## In the following dollars and backticks do not need the extra backslash.
 $spitshell >>$Makefile <<!GROK!THIS!
 
-private = preplibrary \$(CONFIGPM) git_version.sh git_version.h lib/bootlib.pm \
-          myconfig
+private = preplibrary git_version.sh git_version.h myconfig
 
 # Files to be built with variable substitution before perl
 # is available.
@@ -636,7 +635,7 @@ lintflags = \
 .c.s:	perl.h config.h
 	`$(CCCMDSRC)` -S $*.c
 
-all: $(FIRSTMAKEFILE) $(PERL_EXE) $(generated_pods) $(private) $(unidatafiles) $(public) $(dynamic_ext) $(nonxs_ext) extras.make $(MANIFEST_SRT) common_build
+all: $(FIRSTMAKEFILE) lib/bootlib.pm $(generated_pods) $(private) $(unidatafiles) $(public) $(dynamic_ext) $(nonxs_ext) extras.make $(MANIFEST_SRT) common_build
 	@echo " ";
 	@echo "	Everything is up to date. Type '$(MAKE) test' to run test suite."
 
@@ -735,7 +734,7 @@ generate_uudmap$(HOST_EXE_EXT): generate_uudmap$(OBJ_EXT)
 esac
 
 $spitshell >>$Makefile <<'!NO!SUBS!'
-perlmain.c: ext/ExtUtils-Miniperl/pm_to_blib
+perlmain.c:
 	if test -e $(PERL_EXE) -a test -n $(static_ext); then \
 	  $(RUN_PERL) -MExtUtils::Miniperl -e 'writemain(\"perlmain.c", @ARGV)' $(static_ext)
 
@@ -795,10 +794,10 @@ perl.exp: $(PERLEXP) makedef.pl $(CONFIGPM) $(SYM) $(SYMH)
 	;;
 os2)
 	$spitshell >>$Makefile <<'!NO!SUBS!'
-MINIPERLEXP		= miniperl
+PERLEXP		= perl
 
-perl5.def: $(MINIPERLEXP) makedef.pl $(CONFIGPM) $(SYM) $(SYMH) miniperl.map
-	$(MINIPERL) makedef.pl PLATFORM=os2 -DPERL_DLL=$(PERL_DLL) CC_FLAGS="$(OPTIMIZE)" > perl5.def
+perl5.def: $(PERLEXP) makedef.pl $(CONFIGPM) $(SYM) $(SYMH) perl.map
+	$(RUN_PERL) makedef.pl PLATFORM=os2 -DPERL_DLL=$(PERL_DLL) CC_FLAGS="$(OPTIMIZE)" > perl5.def
 
 !NO!SUBS!
 	;;
@@ -860,9 +859,9 @@ $(DTRACE_MAIN_O): perldtrace.d perlmain$(OBJ_EXT)
 
 !NO!SUBS!
 		;;
-    esac
+        esac
 	$spitshell >>$Makefile <<'!NO!SUBS!'
-$(LIBPERL): $& $(perllib_dep) $(DYNALOADER) $(LIBPERLEXPORT)
+$(LIBPERL): $(perllib_dep) $(DYNALOADER) $(LIBPERLEXPORT)
 !NO!SUBS!
 	case "$useshrplib" in
 	true)
@@ -914,8 +913,8 @@ $(PERL_EXE): lib/bootlib.pm
 	case "${osname}${osvers}" in
 	amigaos*)
 		$spitshell >>$Makefile <<'!NO!SUBS!'
-lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
-	$(LD) $(CLDFLAGS) -o $(PERL_EXE) $(perl_objs) $(libs)
+lib/bootlib.pm: $(LIBPERL) $& perlmain$(OBJ_EXT) write_bootlib.pl
+	$(LD) $(CLDFLAGS) -o $(PERL_EXE) perlmain$(OBJ_EXT) $(perl_objs) $(libs)
 #	$(LDLIBPTH) ./perl$(HOST_EXE_EXT) -w -Ilib -Idist/Exporter/lib -MExporter -e '<?>' || sh -c 'echo >&2 Failed to build perl.  Please run make minitest; exit 1'
 	$(RUN_PERL) make_patchnum.pl && \
 	  $(RUN_PERL) configpm && \
@@ -924,7 +923,7 @@ lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
 		;;
 	aix*)
 		$spitshell >>$Makefile <<'!NO!SUBS!'
-lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
+lib/bootlib.pm: $(LIBPERL) $& perlmain$(OBJ_EXT) write_bootlib.pl
 	$(LD) -o $(PERL_EXE) $(CLDFLAGS) perlmain$(OBJ_EXT) $(LLIBPERL) $(libs)
 	$(LDLIBPTH) ./perl$(HOST_EXE_EXT) -w -Ilib -Idist/Exporter/lib -MExporter -e '<?>' || sh -c 'echo >&2 Failed to build perl.  Please run make minitest; exit 1'
 	$(RUN_PERL) make_patchnum.pl && \
@@ -934,7 +933,7 @@ lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
 		;;
 	next4*)
 		$spitshell >>$Makefile <<'!NO!SUBS!'
-lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
+lib/bootlib.pm: $(LIBPERL) $& perlmain$(OBJ_EXT) write_bootlib.pl
 	$(LD) -o $(PERL_EXE) perlmain$(OBJ_EXT) $(perl_objs) $(libs)
 	$(LDLIBPTH) ./perl$(HOST_EXE_EXT) -w -Ilib -Idist/Exporter/lib -MExporter -e '<?>' || sh -c 'echo >&2 Failed to build perl.  Please run make minitest; exit 1'
 	$(RUN_PERL) make_patchnum.pl && \
@@ -958,8 +957,8 @@ NAMESPACEFLAGS = -force_flat_namespace
 		    ;;
 		esac
 		$spitshell >>$Makefile <<'!NO!SUBS!'
-lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
-	$(LD) $(CLDFLAGS) $(NAMESPACEFLAGS) -o $(PERL_EXE) $(perl_objs) $(libs)
+lib/bootlib.pm: $(LIBPERL) $& perlmain$(OBJ_EXT) write_bootlib.pl
+	$(LD) $(CLDFLAGS) $(NAMESPACEFLAGS) -o $(PERL_EXE) perlmain$(OBJ_EXT) $(perl_objs) $(libs)
 !NO!SUBS!
                 case "$ccflags" in
                     *-DDEBUGGING*) $spitshell >>$Makefile <<'!NO!SUBS!'
@@ -977,7 +976,7 @@ lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
 	*)
 		if test "X$hostperl" != X; then
 			$spitshell >>$Makefile <<!GROK!THIS!
-lib/bootlib.pm: \$& \$(perl_objs) write_bootlib.pl
+lib/bootlib.pm: \$(LIBPERL) \$\& perlmain\$(OBJ_EXT) write_bootlib.pl
 	-@rm \$(PERL_EXE)
 	\$(LNS) \$(HOST_PERL) \$(PERL_EXE)
 	\$(LDLIBPTH) ./perl\$(HOST_EXE_EXT) -w -Ilib -Idist/Exporter/lib -MExporter -e '<?>' || sh -c 'echo >&2 Failed to build perl.  Please run make minitest; exit 1'
@@ -987,8 +986,8 @@ lib/bootlib.pm: \$& \$(perl_objs) write_bootlib.pl
 !GROK!THIS!
 		else
 			$spitshell >>$Makefile <<'!NO!SUBS!'
-lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
-	$(LD) $(CLDFLAGS) -o $(PERL_EXE) $(perl_objs) $(libs)
+lib/bootlib.pm: $(LIBPERL) $& perlmain$(OBJ_EXT) write_bootlib.pl
+	$(LD) $(CLDFLAGS) -o $(PERL_EXE) perlmain$(OBJ_EXT) $(perl_objs) $(libs)
 	$(LDLIBPTH) ./perl$(HOST_EXE_EXT) -w -Ilib -Idist/Exporter/lib -MExporter -e '<?>' || sh -c 'echo >&2 Failed to build miniperl.  Please run make minitest; exit 1'
 	$(RUN_PERL) make_patchnum.pl && \
 	  $(RUN_PERL) configpm && \
@@ -1028,7 +1027,7 @@ lib/bootlib.pm: $& $(perl_objs) write_bootlib.pl
 	$spitshell >>$Makefile <<'!NO!SUBS!'
 
 # perl.devel: skip checking exts
-perl.devel: $(MINIPERL_EXE) $(perllib_objs)
+perl.devel: $(PERL_EXE) $(perllib_objs)
 	`sh $(shellflags) cflags "optimize='$(OPTIMIZE)'" perlmain.o` $(PLDLFLAGS) perlmain.c
 	$(SHRPENV) $(LD) -o $@ $(CLDFLAGS) $(CCDLFLAGS) $(perlmain_objs) \
             $(perllib_objs) $(DYNALOADER) `cat ext.libs` $(libs)
@@ -1083,18 +1082,14 @@ makeppport: $(PERL_EXE) $(CONFIGPM) $(nonxs_ext)
 ;;
 esac
 
+# PREPLIBRARY_LIBPERL is an os2-only target
 $spitshell >>$Makefile <<'!NO!SUBS!'
 
 .PHONY: preplibrary common_build
-preplibrary: lib/bootlib.pm $(CONFIGPM) $(PREPLIBRARY_LIBPERL)
+preplibrary: $(CONFIGPM) $(PREPLIBRARY_LIBPERL)
 
-$(CONFIGPM_FROM_CONFIG_SH): $(CONFIGPOD)
-
-# we have too many circular dependencies.
-
-$(CONFIGPOD): config.sh configpm Porting/Glossary
-	perl configpm || \
-	  $(RUN_PERL) configpm
+$(CONFIGPM_FROM_CONFIG_SH): $(PERL_EXE) config.sh configpm Porting/Glossary
+	$(RUN_PERL) configpm
 
 unidatafiles $(unidatafiles) pod/perluniprops.pod: uni.data
 
@@ -1298,11 +1293,11 @@ META.json:   FORCE
 	PATH="`pwd`:${PATH}" PERL5LIB="`pwd`/lib" $(RUN_PERL) Porting/makemeta -j
 
 regen_uni: $(PERL_EXE) FORCE
-	$(MINIPERL) lib/unicore/mktables -C lib/unicore -P pod -maketest -makelist -p -w
-	$(MINIPERL) regen/mk_PL_charclass.pl
-	$(MINIPERL) regen/ebcdic.pl
-	$(MINIPERL) regen/charset_translations.pl
-	$(MINIPERL) regen/unicode_constants.pl
+	$(RUN_PERL) lib/unicore/mktables -C lib/unicore -P pod -maketest -makelist -p -w
+	$(RUN_PERL) regen/mk_PL_charclass.pl
+	$(RUN_PERL) regen/ebcdic.pl
+	$(RUN_PERL) regen/charset_translations.pl
+	$(RUN_PERL) regen/unicode_constants.pl
 	$(RUN_PERL) regen/mk_invlists.pl
 	$(RUN_PERL) regen/regcharclass.pl
 	$(RUN_PERL) regen/regcharclass_multi_char_folds.pl
@@ -1330,18 +1325,22 @@ manicheck:	FORCE
 #
 # DynaLoader may be needed for extensions that use Makefile.PL.
 
-$(DYNALOADER) $(DL_SRC): preplibrary FORCE $(nonxs_ext)
-	$(RUN_PERL) make_ext.pl $@ $(MAKE_EXT_ARGS) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=static $(STATIC_LDFLAGS)
+$(DYNALOADER): $(DL_SRC)
+	if test -f $(PERL_EXE); then \
+	  $(RUN_PERL) make_ext.pl $@ $(MAKE_EXT_ARGS) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=static $(STATIC_LDFLAGS); \
+	  $(CPS) ext/DynaLoader/DynaLoader.o DynaLoader.o \
+          $(MAKE) perlmain.c \
+	else touch $@; fi
 
 $(boot_ext): $(DYNALOADER)
 
-d_dummy $(dynamic_ext):	preplibrary makeppport $(DYNALOADER) FORCE $(PERLEXPORT) $(LIBPERL)
+d_dummy $(dynamic_ext):	$(PERL_EXE) makeppport FORCE $(PERLEXPORT)
 	$(RUN_PERL) make_ext.pl $@ $(MAKE_EXT_ARGS) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=dynamic
 
-s_dummy $(static_ext):  preplibrary makeppport $(DYNALOADER) FORCE
+s_dummy $(static_ext):  $(PERL_EXE) makeppport FORCE
 	$(RUN_PERL) make_ext.pl $@ $(MAKE_EXT_ARGS) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=static $(STATIC_LDFLAGS)
 
-n_dummy $(nonxs_ext):	preplibrary FORCE
+n_dummy $(nonxs_ext):	$(PERL_EXE) FORCE
 	$(RUN_PERL) make_ext.pl $@ $(MAKE_EXT_ARGS) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL)
 !NO!SUBS!
 
@@ -1386,7 +1385,7 @@ veryclean:	_verycleaner _mopup _clobber
 
 # Do not 'make _mopup' directly.
 _mopup:
-	rm -f *$(OBJ_EXT) *$(LIB_EXT) all perlmain.c generate_uudmap$(EXE_EXT) $(generated_headers)
+	rm -f *$(OBJ_EXT) *$(LIB_EXT) all generate_uudmap$(EXE_EXT) $(generated_headers)
 	-rmdir .depending
 	-@test -f extra.pods && rm -f `cat extra.pods`
 	-@test -f vms/README_vms.pod && rm -f vms/README_vms.pod
@@ -1394,7 +1393,7 @@ _mopup:
 	-rm -f perl.export cperl.dll perl.libexp perl.map perl.def
 	-rm -f *perl.xok
 	-rm -f cygwin.c libperl*.def libcperl*.dll cygcperl*.dll *.exe.stackdump
-	-rm -f $(PERL_EXE) $(MINIPERL_EXE) $(LIBPERL) libperl.* microperl
+	-rm -f $(PERL_EXE) $(LIBPERL) libperl.* microperl
 	-rm -f config.arch config.over $(DTRACE_H)
 	-rm -f t/$(LIBPERL) cpan/B-C/$(LIBPERL)
 
@@ -1402,9 +1401,9 @@ _cleaner1:
 	-cd os2; rm -f Makefile
 	-cd pod; $(LDLIBPTH) $(MAKE) $(CLEAN)
 	-cd utils; $(LDLIBPTH) $(MAKE) $(CLEAN)
-	-@if test -f $(MINIPERL_EXE) ; then \
+	-@if test -f $(PERL_EXE) ; then \
 	for x in $(DYNALOADER) $(dynamic_ext) $(static_ext) $(nonxs_ext) ; do \
-	$(MINIPERL) make_ext.pl --target=$(CLEAN) $$x MAKE="$(MAKE)" ; \
+	$(RUN_PERL) make_ext.pl --target=$(CLEAN) $$x MAKE="$(MAKE)" ; \
 	done ; \
 	else \
 	sh $(CLEAN).sh ; \
@@ -1550,13 +1549,13 @@ test_prep_pre: preplibrary utilities $(nonxs_ext)
 
 case "$targethost" in
 '') $spitshell >>$Makefile <<'!NO!SUBS!'
-test_prep test-prep: test_prep_pre $(MINIPERL_EXE) $(unidatafiles) $(PERL_EXE) \
+test_prep test-prep: test_prep_pre $(PERL_EXE) $(unidatafiles) $(PERL_EXE) \
 	$(dynamic_ext) extras.make $(TEST_PERL_DLL) runtests $(generated_pods) common_build
 	cd t && (rm -f $(PERL_EXE); $(LNS) ../$(PERL_EXE) $(PERL_EXE))
 !NO!SUBS!
     ;;
 *) $spitshell >>$Makefile <<!GROK!THIS!
-test_prep test-prep: test_prep_pre \$(MINIPERL_EXE) \$(unidatafiles) \$(PERL_EXE) \
+test_prep test-prep: test_prep_pre \$(PERL_EXE) \$(unidatafiles) \$(PERL_EXE) \
 	\$(dynamic_ext) extras.make \$(TEST_PERL_DLL) runtests \
 	\$(generated_pods) common_build
 	$to libperl.*
@@ -1624,8 +1623,8 @@ esac
 
 $spitshell >>$Makefile <<'!NO!SUBS!'
 
-test_prep_reonly: $(MINIPERL_EXE) $(PERL_EXE) $(dynamic_ext_re) $(TEST_PERL_DLL)
-	$(MINIPERL) make_ext.pl $(dynamic_ext_re) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=dynamic
+test_prep_reonly: $(PERL_EXE) $(dynamic_ext_re) $(TEST_PERL_DLL)
+	$(RUN_PERL) make_ext.pl $(dynamic_ext_re) MAKE="$(MAKE)" LIBPERL_A=$(LIBPERL) LINKTYPE=dynamic
 	cd t && (rm -f $(PERL_EXE); $(LNS) ../$(PERL_EXE) $(PERL_EXE))
 !NO!SUBS!
 
@@ -1675,7 +1674,7 @@ $spitshell >>$Makefile <<'!NO!SUBS!'
 
 # minitest can't depend on lib/Config.pm because that might be where miniperl
 # is crashing. ditto for mktables
-minitest_prep:
+minitest_prep: $(PERL_EXE)
 	-@test -f lib/Config.pm -a -f lib/unicore/Name.pm || $(MAKE) lib/Config.pm $(unidatafiles)
 	@echo " "
 	@echo "You may see some irrelevant test failures if you have been unable"
@@ -1684,10 +1683,10 @@ minitest_prep:
 
 MINITEST_TESTS = base/*.t opbasic/*.t comp/*.t op/*.t cmd/*.t run/*.t io/*.t re/*.t uni/*.t perf/*.t
 
-minitest: $(PERL_EXE) minitest_prep
+minitest: minitest_prep
 	- cd t && $(RUN_PERL) TEST $(MINITEST_TESTS) <$(devtty)
 
-minitest-notty minitest_notty: $(MINIPERL_EXE) minitest_prep
+minitest-notty minitest_notty: minitest_prep
 	- cd t && (rm -f $(PERL_EXE); $(LNS) ../$(PERL_EXE) $(PERL_EXE)) \
 		&& $(RUN_PERL) TEST base/*.t comp/*.t cmd/*.t run/*.t \
 		io/*.t re/*.t opbasic/*.t op/*.t uni/*.t perf/*.t \
