@@ -5422,6 +5422,14 @@
 #define	USE_SAFE_HASHITER		/**/
 #endif
 
+/* USE_EXACT_ARITH:
+ *	This symbol, if defined, indicates that Perl uses exact_arith as default.
+ */
+#define PERL_EXACT_ARITH
+#ifndef USE_EXACT_ARITH
+#	USE_EXACT_ARITH		/**/
+#endif
+
 /* PERL_HASH_FUNC_*:
  *	This symbol defines the used perl hash function variant.
  *      It is set in Configure or via -Dhash_func=, but can be left blank.
@@ -5441,6 +5449,6 @@
 #endif
 
 /* Generated from:
- * 990ef5f71a317186d6c8aabc0726501d20d6e3c95e8cc963927ef1f9442b1ef8 config_h.SH
+ * 2fd154224e5a3c37d02b94e61049ac5fa721aeb72f780d65437eabe45adb7dbc config_h.SH
  * 043b5928ad51174124a43a0fbba6e2f18417ee70377d8bb10f77852b62313acf uconfig.sh
  * ex: set ro: */
