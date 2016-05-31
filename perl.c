@@ -1905,6 +1905,9 @@ S_Internals_V(pTHX_ CV *cv)
 #  ifdef PERL_DONT_CREATE_GVSV
 			     " PERL_DONT_CREATE_GVSV"
 #  endif
+#  ifdef PERL_EXACT_ARITH
+			     " PERL_EXACT_ARITH"
+#  endif
 #  ifdef PERL_EXTERNAL_GLOB
 			     " PERL_EXTERNAL_GLOB"
 #  endif
@@ -2003,6 +2006,9 @@ S_Internals_V(pTHX_ CV *cv)
 #  endif
 #  ifdef USE_CPERL
 			     " USE_CPERL"
+#  endif
+#  ifdef USE_EXACT_ARITH
+			     " USE_EXACT_ARITH"
 #  endif
 #  ifdef USE_FAST_STDIO
 			     " USE_FAST_STDIO"
