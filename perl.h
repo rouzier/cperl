@@ -309,9 +309,12 @@
     RX_ENGINE(prog)->dupe(aTHX_ (prog),(param))
 #endif
 
-
-
-
+#ifdef PERL_EXACT_ARITH
+#define IS_EXACT_ARITH   PL_curcop->cop_hints & HINT_EXACT_ARITH
+/*#define IS_EXACT_ARITH cop_hints_fetch_pvs(PL_curcop, "exact_arith", REFCOUNTED_HE_EXISTS)*/
+#else
+#define IS_EXACT_ARITH   0
+#endif
 
 /*
  * Because of backward compatibility reasons the PERL_UNUSED_DECL
@@ -5683,7 +5686,6 @@ END_EXTERN_C
 #define HINT_UTF8		0x00800000 /* utf8 pragma */
 
 #define HINT_NO_AMAGIC		0x01000000 /* overloading pragma */
-
 #define HINT_RE_FLAGS		0x02000000 /* re '/xism' pragma */
 
 #define HINT_FEATURE_MASK	0x1c000000 /* 3 bits (4,8,10) for feature bundles */

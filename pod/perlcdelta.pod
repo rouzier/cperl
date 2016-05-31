@@ -122,9 +122,11 @@ dual-life modules would have a F<Changes> file that could be cribbed.
 
 =over 4
 
-=item *
+=item L<exact_arith> 0.01
 
-XXX
+Promote on overflow to bigint/bignum as in perl6, do not loose precision
+with all builtin arithmetic operators.
+L<[cperl #21]|https://github.com/perl11/cperl/issues/21>
 
 =back
 
