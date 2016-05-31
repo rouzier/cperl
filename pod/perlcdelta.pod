@@ -67,6 +67,8 @@ C<HINTS_LOCALE_PARTIAL> is now the same as C<HINTS_LOCALE>.
 
 XXX Any deprecated features, syntax, modules etc. should be listed here.
 
+[ List each other deprecation as a =head2 entry ]
+
 =head2 Module removals
 
 XXX Remove this section if inapplicable.
@@ -93,8 +95,6 @@ XXX Note that deprecated modules should be listed here even if they are listed
 as an updated module in the L</Modules and Pragmata> section.
 
 =back
-
-[ List each other deprecation as a =head2 entry ]
 
 =head1 Performance Enhancements
 
@@ -124,9 +124,10 @@ dual-life modules would have a F<Changes> file that could be cribbed.
 
 =item L<exact_arith> 0.01
 
-Promote on overflow to bigint/bignum as in perl6, do not loose precision
-with all builtin arithmetic operators.
-L<[cperl #21]|https://github.com/perl11/cperl/issues/21>
+Switch to L<Math::BigInt::GMP> or L<Math::BigInt> on arithmetic
+integer overflows. Do not loose precision with any builtin integer
+arithmetic operator.
+See L<[cperl #21]|https://github.com/perl11/cperl/issues/21>
 
 =back
 
@@ -281,6 +282,13 @@ L</Platform Support> section, instead.
 Fixed C<d_builtin_arith_overflow> detection and usage for 32bit
 systems with C<use64bitint>. They do use the 'll' suffix, same as with
 WIN64.  Now we can use this optimization.
+
+=item *
+
+Added the C<-Duseexactarith> Configure argument to use the new
+L<exact_arith> pragma by default. This is then similar to perl6.
+There's also a new C<PERL_EXACT_ARITH> definition turned on by default
+to specify that exact_arith can be used.
 
 =back
 

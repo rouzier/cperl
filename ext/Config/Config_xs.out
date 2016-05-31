@@ -266,7 +266,7 @@ Config_lookup (register const char *str, register unsigned int len);
 
 struct Perl_Config;
 
-#define TOTAL_KEYWORDS 1298
+#define TOTAL_KEYWORDS 1299
 #define MIN_WORD_LENGTH 1
 #define MAX_WORD_LENGTH 37
 #define MIN_HASH_VALUE 2
@@ -1536,6 +1536,7 @@ struct stringpool_t
     char stringpool_str5275[sizeof ("getgrnam_r_proto")];
     char stringpool_str5284[sizeof ("d_printf_format_null")];
     char stringpool_str5294[sizeof ("d_gethbyaddr")];
+    char stringpool_str5309[sizeof ("useexactarith")];
     char stringpool_str5335[sizeof ("longlongsize")];
     char stringpool_str5337[sizeof ("d_charvspr")];
     char stringpool_str5353[sizeof ("d_gethbyname")];
@@ -2837,6 +2838,7 @@ static const struct stringpool_t stringpool_contents =
     "getgrnam_r_proto",
     "d_printf_format_null",
     "d_gethbyaddr",
+    "useexactarith",
     "longlongsize",
     "d_charvspr",
     "d_gethbyname",
@@ -6298,10 +6300,12 @@ Config_lookup (register const char *str, register unsigned int len)
 
       {(U16)(long)&((struct stringpool_t *)0)->stringpool_str5294,		T_INV,0,ALN64I"@@d_gethbyaddr@@"},
       {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
+      {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
+
+      {(U16)(long)&((struct stringpool_t *)0)->stringpool_str5309,		T_INV,0,ALN64I"@@useexactarith@@"},
       {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
       {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
-      {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
-      {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
+      {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO}, {XSCNO},
 
       {(U16)(long)&((struct stringpool_t *)0)->stringpool_str5335,		T_INV,0,ALN64I"@@longlongsize@@"},
       {XSCNO},
@@ -7159,7 +7163,7 @@ Config_lookup (register const char *str, register unsigned int len)
       {(U16)(long)&((struct stringpool_t *)0)->stringpool_str10266,	T_INV,0,ALN64I"@@nv_preserves_uv_bits@@"}
     };
 
-#line 7162 "Config.xs"
+#line 7166 "Config.xs"
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
       register int key = Config_hash (str, len);

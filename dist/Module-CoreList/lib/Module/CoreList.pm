@@ -15184,6 +15184,7 @@ our %delta = (
             'Module::CoreList::Utils'=> '20170815c',
             'coretypes'             => '0.03c',
             'Devel::Peek'           => '1.26_03',
+            'exact_arith'           => '0.01',
             'fields'                => '2.26c',
             'Mu'                    => '0.02c',
         },
