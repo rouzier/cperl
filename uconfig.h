@@ -5438,9 +5438,14 @@
 #define PERL_BUILD_DATE "Thu Jan  1 00:00:00 GMT 1970"
 #endif
 
+/* UNEXEC:
+ *	This symbol defines the used unexec source.
+ *      Defined via ccflags.
+ */
+
 #endif
 
 /* Generated from:
- * 990ef5f71a317186d6c8aabc0726501d20d6e3c95e8cc963927ef1f9442b1ef8 config_h.SH
+ * 576964313c64f11582c04eae0b52bf43a5277c2a267b29e8397fe38d20e1b5a9 config_h.SH
  * 043b5928ad51174124a43a0fbba6e2f18417ee70377d8bb10f77852b62313acf uconfig.sh
  * ex: set ro: */
