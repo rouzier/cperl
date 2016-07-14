@@ -5438,6 +5438,17 @@
 #define PERL_BUILD_DATE "Thu Jan  1 00:00:00 GMT 1970"
 #endif
 
+/* EXE_EXT:
+ *	This symbol is either ".exe" on dosish system, ".pm" on Stratus VOS or undefined.
+ */
+#ifndef EXE_EXT
+#if  defined(__HAIKU__) || defined(__VOS__) || defined(__CYGWIN__)
+  || defined(DOSISH) || defined(OS2) || defined(WIN32) || defined(DJGPP)
+  || defined(__SYMBIAN32__)
+#define	EXE_EXT ""	/**/
+#endif
+#endif
+
 /* UNEXEC:
  *	This symbol defines the used unexec source.
  *      Defined via ccflags.
@@ -5446,6 +5457,6 @@
 #endif
 
 /* Generated from:
- * 576964313c64f11582c04eae0b52bf43a5277c2a267b29e8397fe38d20e1b5a9 config_h.SH
- * 043b5928ad51174124a43a0fbba6e2f18417ee70377d8bb10f77852b62313acf uconfig.sh
+ * 0cfd11389a1a6a718c58c86093fdac3ecb3b51c163cc641139c3a534ecbd319f config_h.SH
+ * c3188bdebdaf0db23b092c754bc0b8379967197fdf52298f81d9f9613b184121 uconfig.sh
  * ex: set ro: */
