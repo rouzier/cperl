@@ -1296,7 +1296,7 @@ perl_destruct(pTHXx)
 	AHE * const array = HvARRAY(PL_strtab);
 	HE *hent = AHe(array[0]);
 
-	for (;;) {
+	HE_EACH(PL_strtab, hent, {
 	    if (hent && ckWARN_d(WARN_INTERNAL)) {
 		HE * const next = HeNEXT(hent);
 		Perl_warner(aTHX_ packWARN(WARN_INTERNAL),
@@ -1310,7 +1310,7 @@ perl_destruct(pTHXx)
 		    break;
 		hent = AHe(array[riter]);
 	    }
-	}
+        })
 
 	Safefree(array);
 	HvARRAY(PL_strtab) = 0;
