@@ -36,6 +36,14 @@ L<perldiag/"Subroutine &%s::%s masks existing package %s::%s">
 and L<perldiag/"Subroutine &%s masks new package %s">.
 Use C<no warnings 'shadow';> to silence these new warnings.
 
+=head2 C3 MRO is the new default
+
+The default MRO switched from the DFS (depth-first-search) to the
+recommended C3 algorithm, which was previously optional. All object
+system based on inheritence need to use C3 to avoid the diamond
+problem. And this change speeds it up, avoiding run-time loading of
+F<ext/mro>.
+
 =head1 Security
 
 XXX Any security-related notices go here.  In particular, any security
