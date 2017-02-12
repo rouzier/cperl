@@ -5014,12 +5014,9 @@ Perl_sv_setpv(pTHX_ SV *const sv, const char *const ptr)
 
 /*
 =for apidoc sv_setpv_mg
-
 Like C<sv_setpv>, but also handles 'set' magic.
-
 =cut
 */
-
 void
 Perl_sv_setpv_mg(pTHX_ SV *const sv, const char *const ptr)
 {
@@ -5029,6 +5026,11 @@ Perl_sv_setpv_mg(pTHX_ SV *const sv, const char *const ptr)
     SvSETMAGIC(sv);
 }
 
+/*
+=for apidoc sv_sethek
+Like C<sv_setsv> for PVs, but takes the string value from the hek.
+=cut
+*/
 void
 Perl_sv_sethek(pTHX_ SV *const sv, const HEK *const hek)
 {
