@@ -249,31 +249,32 @@
 #define KEY_times		233
 #define KEY_tr			234
 #define KEY_truncate		235
-#define KEY_uc			236
-#define KEY_ucfirst		237
-#define KEY_umask		238
-#define KEY_undef		239
-#define KEY_unless		240
-#define KEY_unlink		241
-#define KEY_unpack		242
-#define KEY_unshift		243
-#define KEY_untie		244
-#define KEY_until		245
-#define KEY_use			246
-#define KEY_utime		247
-#define KEY_values		248
-#define KEY_vec			249
-#define KEY_wait		250
-#define KEY_waitpid		251
-#define KEY_wantarray		252
-#define KEY_warn		253
-#define KEY_when		254
-#define KEY_while		255
-#define KEY_write		256
-#define KEY_x			257
-#define KEY_xor			258
-#define KEY_y			259
+#define KEY_typeof		236
+#define KEY_uc			237
+#define KEY_ucfirst		238
+#define KEY_umask		239
+#define KEY_undef		240
+#define KEY_unless		241
+#define KEY_unlink		242
+#define KEY_unpack		243
+#define KEY_unshift		244
+#define KEY_untie		245
+#define KEY_until		246
+#define KEY_use			247
+#define KEY_utime		248
+#define KEY_values		249
+#define KEY_vec			250
+#define KEY_wait		251
+#define KEY_waitpid		252
+#define KEY_wantarray		253
+#define KEY_warn		254
+#define KEY_when		255
+#define KEY_while		256
+#define KEY_write		257
+#define KEY_x			258
+#define KEY_xor			259
+#define KEY_y			260
 
 /* Generated from:
- * 0fe30f14e3744d6c9a1ff3fc266210e12df8952bbe54e9a8708028d0ab5f8b5a regen/keywords.pl
+ * b753f09d169aeb1728f810b3a473d7cbcea01282dbe668fc82f41368862fe2c3 regen/keywords.pl
  * ex: set ro: */
