@@ -98,7 +98,8 @@ const struct flag_to_name cv_flags_names[] = {
     {CVf_PURE, "PURE,"},
     {CVf_STATIC, "STATIC,"},
     {CVf_INLINABLE, "INLINABLE,"},
-    {CVf_MULTI, "MULTI,"}
+    {CVf_MULTI, "MULTI,"},
+    {CVf_LAZYPARSE, "LAZYPARSE,"}
 };
 
 const struct flag_to_name hints_flags_names[] = {
