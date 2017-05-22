@@ -17654,8 +17654,9 @@ our %delta :const = (
             'B::Op_private'         => '5.029000',
             'Module::CoreList'      => '5.20180913c',
             'Module::CoreList::Utils'=> '5.20180913c',
-            'Errno'                 => '1.29_01',
+            'attributes'            => '1.15c',
             'hashiter'              => '0.02',
+            'Errno'                 => '1.29_01',
             'Storable'              => '3.11_02',
         },
         removed => {
