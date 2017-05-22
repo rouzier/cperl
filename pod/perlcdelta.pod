@@ -128,9 +128,9 @@ See L</Protected hash iterators>.
 
 =over 4
 
-=item *
+=item L<attributes> 1.15c
 
-L<XXX> has been upgraded from version A.xx to B.yy.
+Add ffi support, :native(), :encoded(), :nativeconv(), :symbol().
 
 =back
 
