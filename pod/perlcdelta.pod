@@ -132,6 +132,14 @@ See L</Protected hash iterators>.
 
 Add ffi support, :native(), :encoded(), :nativeconv(), :symbol().
 
+=item L<Opcode> 1.40_03c
+
+Restrict the new op 'enterffi'.
+
+=item L<warnings> 1.43
+
+Add C<ffi>
+
 =back
 
 =head2 Removed Modules and Pragmata
