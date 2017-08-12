@@ -4,25 +4,25 @@
    Any changes made here will be lost!
  */
 
-#define PERL_BISON_VERSION  30000
+#define PERL_BISON_VERSION  20007
 
 #ifdef PERL_CORE
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 2.7.12-4996.  */
 
 /* Bison interface for Yacc-like parsers in C
-
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
-
+   
+      Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-
+   
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-
+   
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.  */
 
@@ -35,11 +35,11 @@
    special exception, which will cause the skeleton and the resulting
    Bison output files to be licensed under the GNU General Public
    License without this special exception.
-
+   
    This special exception was added by the Free Software Foundation in
    version 2.2 of Bison.  */
 
-/* Debug traces.  */
+/* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0
 #endif
@@ -47,98 +47,101 @@
 extern int yydebug;
 #endif
 
-/* Token type.  */
+/* Tokens.  */
 #ifndef YYTOKENTYPE
 # define YYTOKENTYPE
-  enum yytokentype
-  {
-    GRAMPROG = 258,
-    GRAMEXPR = 259,
-    GRAMBLOCK = 260,
-    GRAMBARESTMT = 261,
-    GRAMFULLSTMT = 262,
-    GRAMSTMTSEQ = 263,
-    BAREWORD = 264,
-    METHOD = 265,
-    FUNCMETH = 266,
-    THING = 267,
-    PMFUNC = 268,
-    PRIVATEREF = 269,
-    QWLIST = 270,
-    FUNC0OP = 271,
-    FUNC0SUB = 272,
-    UNIOPSUB = 273,
-    LSTOPSUB = 274,
-    PLUGEXPR = 275,
-    PLUGSTMT = 276,
-    CLASSDECL = 277,
-    LABEL = 278,
-    FORMAT = 279,
-    SUB = 280,
-    METHDECL = 281,
-    MULTIDECL = 282,
-    ANONSUB = 283,
-    PACKAGE = 284,
-    USE = 285,
-    WHILE = 286,
-    UNTIL = 287,
-    IF = 288,
-    UNLESS = 289,
-    ELSE = 290,
-    ELSIF = 291,
-    CONTINUE = 292,
-    FOR = 293,
-    GIVEN = 294,
-    WHEN = 295,
-    DEFAULT = 296,
-    LOOPEX = 297,
-    DOTDOT = 298,
-    YADAYADA = 299,
-    FUNC0 = 300,
-    FUNC1 = 301,
-    FUNC = 302,
-    UNIOP = 303,
-    LSTOP = 304,
-    RELOP = 305,
-    EQOP = 306,
-    MULOP = 307,
-    UNIMULOP = 308,
-    ADDOP = 309,
-    DOLSHARP = 310,
-    DO = 311,
-    HASHBRACK = 312,
-    NOAMP = 313,
-    LOCAL = 314,
-    MY = 315,
-    HAS = 316,
-    REQUIRE = 317,
-    COLONATTR = 318,
-    FORMLBRACK = 319,
-    FORMRBRACK = 320,
-    PREC_LOW = 321,
-    OROP = 322,
-    DOROP = 323,
-    ANDOP = 324,
-    NOTOP = 325,
-    ASSIGNOP = 326,
-    OROR = 327,
-    DORDOR = 328,
-    ANDAND = 329,
-    BITOROP = 330,
-    BITANDOP = 331,
-    SHIFTOP = 332,
-    MATCHOP = 333,
-    UMINUS = 334,
-    REFGEN = 335,
-    POWOP = 336,
-    POWCOP = 337,
-    PREINC = 338,
-    PREDEC = 339,
-    POSTINC = 340,
-    POSTDEC = 341,
-    POSTJOIN = 342,
-    ARROW = 343
-  };
+   /* Put the tokens into the symbol table, so that GDB and other debuggers
+      know about them.  */
+   enum yytokentype {
+     GRAMPROG = 258,
+     GRAMEXPR = 259,
+     GRAMBLOCK = 260,
+     GRAMBARESTMT = 261,
+     GRAMFULLSTMT = 262,
+     GRAMSTMTSEQ = 263,
+     BAREWORD = 264,
+     METHOD = 265,
+     FUNCMETH = 266,
+     THING = 267,
+     PMFUNC = 268,
+     PRIVATEREF = 269,
+     QWLIST = 270,
+     FUNC0OP = 271,
+     FUNC0SUB = 272,
+     UNIOPSUB = 273,
+     LSTOPSUB = 274,
+     PLUGEXPR = 275,
+     PLUGSTMT = 276,
+     CLASSDECL = 277,
+     MACRODEF = 278,
+     LABEL = 279,
+     MACRO = 280,
+     FORMAT = 281,
+     SUB = 282,
+     METHDECL = 283,
+     MULTIDECL = 284,
+     ANONSUB = 285,
+     PACKAGE = 286,
+     USE = 287,
+     WHILE = 288,
+     UNTIL = 289,
+     IF = 290,
+     UNLESS = 291,
+     ELSE = 292,
+     ELSIF = 293,
+     CONTINUE = 294,
+     FOR = 295,
+     GIVEN = 296,
+     WHEN = 297,
+     DEFAULT = 298,
+     LOOPEX = 299,
+     DOTDOT = 300,
+     YADAYADA = 301,
+     FUNC0 = 302,
+     FUNC1 = 303,
+     FUNC = 304,
+     UNIOP = 305,
+     LSTOP = 306,
+     RELOP = 307,
+     EQOP = 308,
+     MULOP = 309,
+     UNIMULOP = 310,
+     ADDOP = 311,
+     DOLSHARP = 312,
+     DO = 313,
+     HASHBRACK = 314,
+     NOAMP = 315,
+     LOCAL = 316,
+     MY = 317,
+     HAS = 318,
+     REQUIRE = 319,
+     COLONATTR = 320,
+     FORMLBRACK = 321,
+     FORMRBRACK = 322,
+     PREC_LOW = 323,
+     DOROP = 324,
+     OROP = 325,
+     ANDOP = 326,
+     NOTOP = 327,
+     ASSIGNOP = 328,
+     DORDOR = 329,
+     OROR = 330,
+     ANDAND = 331,
+     BITOROP = 332,
+     BITANDOP = 333,
+     SHIFTOP = 334,
+     MATCHOP = 335,
+     REFGEN = 336,
+     UMINUS = 337,
+     POWCOP = 338,
+     POWOP = 339,
+     POSTJOIN = 340,
+     POSTDEC = 341,
+     POSTINC = 342,
+     PREDEC = 343,
+     PREINC = 344,
+     ARROW = 345
+   };
 #endif
 
 /* Tokens.  */
@@ -162,74 +165,76 @@ extern int yydebug;
 #define PLUGEXPR 275
 #define PLUGSTMT 276
 #define CLASSDECL 277
-#define LABEL 278
-#define FORMAT 279
-#define SUB 280
-#define METHDECL 281
-#define MULTIDECL 282
-#define ANONSUB 283
-#define PACKAGE 284
-#define USE 285
-#define WHILE 286
-#define UNTIL 287
-#define IF 288
-#define UNLESS 289
-#define ELSE 290
-#define ELSIF 291
-#define CONTINUE 292
-#define FOR 293
-#define GIVEN 294
-#define WHEN 295
-#define DEFAULT 296
-#define LOOPEX 297
-#define DOTDOT 298
-#define YADAYADA 299
-#define FUNC0 300
-#define FUNC1 301
-#define FUNC 302
-#define UNIOP 303
-#define LSTOP 304
-#define RELOP 305
-#define EQOP 306
-#define MULOP 307
-#define UNIMULOP 308
-#define ADDOP 309
-#define DOLSHARP 310
-#define DO 311
-#define HASHBRACK 312
-#define NOAMP 313
-#define LOCAL 314
-#define MY 315
-#define HAS 316
-#define REQUIRE 317
-#define COLONATTR 318
-#define FORMLBRACK 319
-#define FORMRBRACK 320
-#define PREC_LOW 321
-#define OROP 322
-#define DOROP 323
-#define ANDOP 324
-#define NOTOP 325
-#define ASSIGNOP 326
-#define OROR 327
-#define DORDOR 328
-#define ANDAND 329
-#define BITOROP 330
-#define BITANDOP 331
-#define SHIFTOP 332
-#define MATCHOP 333
-#define UMINUS 334
-#define REFGEN 335
-#define POWOP 336
-#define POWCOP 337
-#define PREINC 338
-#define PREDEC 339
-#define POSTINC 340
+#define MACRODEF 278
+#define LABEL 279
+#define MACRO 280
+#define FORMAT 281
+#define SUB 282
+#define METHDECL 283
+#define MULTIDECL 284
+#define ANONSUB 285
+#define PACKAGE 286
+#define USE 287
+#define WHILE 288
+#define UNTIL 289
+#define IF 290
+#define UNLESS 291
+#define ELSE 292
+#define ELSIF 293
+#define CONTINUE 294
+#define FOR 295
+#define GIVEN 296
+#define WHEN 297
+#define DEFAULT 298
+#define LOOPEX 299
+#define DOTDOT 300
+#define YADAYADA 301
+#define FUNC0 302
+#define FUNC1 303
+#define FUNC 304
+#define UNIOP 305
+#define LSTOP 306
+#define RELOP 307
+#define EQOP 308
+#define MULOP 309
+#define UNIMULOP 310
+#define ADDOP 311
+#define DOLSHARP 312
+#define DO 313
+#define HASHBRACK 314
+#define NOAMP 315
+#define LOCAL 316
+#define MY 317
+#define HAS 318
+#define REQUIRE 319
+#define COLONATTR 320
+#define FORMLBRACK 321
+#define FORMRBRACK 322
+#define PREC_LOW 323
+#define DOROP 324
+#define OROP 325
+#define ANDOP 326
+#define NOTOP 327
+#define ASSIGNOP 328
+#define DORDOR 329
+#define OROR 330
+#define ANDAND 331
+#define BITOROP 332
+#define BITANDOP 333
+#define SHIFTOP 334
+#define MATCHOP 335
+#define REFGEN 336
+#define UMINUS 337
+#define POWCOP 338
+#define POWOP 339
+#define POSTJOIN 340
 #define POSTDEC 341
-#define POSTJOIN 342
-#define ARROW 343
+#define POSTINC 342
+#define PREDEC 343
+#define PREINC 344
+#define ARROW 345
 
-/* Value type.  */
+
 #ifdef PERL_IN_TOKE_C
 static bool
 S_is_opval_token(int type) {
@@ -240,6 +245,7 @@ S_is_opval_token(int type) {
     case FUNC0SUB:
     case FUNCMETH:
     case LSTOPSUB:
+    case MACRODEF:
     case METHOD:
     case PLUGEXPR:
     case PLUGSTMT:
@@ -255,9 +261,9 @@ S_is_opval_token(int type) {
 #endif /* PERL_IN_TOKE_C */
 #endif /* PERL_CORE */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-
-union YYSTYPE
+typedef union YYSTYPE
 {
+/* Line 2053 of yacc.c  */
 
     I32	ival; /* __DEFAULT__ (marker for regen_perly.pl;
 				must always be 1st union member) */
@@ -265,16 +271,28 @@ union YYSTYPE
     OP *opval;
     GV *gvval;
 
-};
 
-typedef union YYSTYPE YYSTYPE;
+/* Line 2053 of yacc.c  */
+} YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
+# define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
 
-
+#ifdef YYPARSE_PARAM
+#if defined __STDC__ || defined __cplusplus
+int yyparse (void *YYPARSE_PARAM);
+#else
+int yyparse ();
+#endif
+#else /* ! YYPARSE_PARAM */
+#if defined __STDC__ || defined __cplusplus
 int yyparse (void);
+#else
+int yyparse ();
+#endif
+#endif /* ! YYPARSE_PARAM */
 
 
 #if YYDEBUG
@@ -282,6 +300,6 @@ int yyparse (void);
 #endif
 
 /* Generated from:
- * e88b85ca8faee253ea215494db7c059e7964064e0cf1ebbe60daca5ed25a1780 perly.y
- * 5132b115dedc64fcaea289ebf11528abd6f23d9b88e5247a236e1116603edcdb regen_perly.pl
+ * 1f589f6be197bd1b08c6a4148de328e722ccaded7a456c479bd522918c4a923f perly.y
+ * 25c852d9fc4ee1fa7741d85b998cb1c114ca562f098ad0e98d8b0a15aadf00f9 regen_perly.pl
  * ex: set ro: */

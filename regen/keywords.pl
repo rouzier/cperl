@@ -245,6 +245,7 @@ __END__
 -lstat
 -lt
 +m
++macro
 +map
 -method
 -mkdir
