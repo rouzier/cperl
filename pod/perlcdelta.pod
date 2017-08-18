@@ -286,6 +286,11 @@ L</Platform Support> section, instead.
 
 =item *
 
+Added the C<-Duseexactarith> Configure argument to use the new
+L<exact_arith> pragma by default. This is then very similar to perl6.
+
+=item *
+
 Fixed C<d_builtin_arith_overflow> detection and usage for 32bit
 systems with C<use64bitint>. They do use the 'll' suffix, same as with
 WIN64.  Now we can use this optimization.

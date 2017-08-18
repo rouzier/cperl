@@ -147,6 +147,10 @@ For all versions see [bench-all/](bench-all/index.html)
 * Fast and proper object orientation. User facing classes. class, role, method,
   multi, has, is, does keywords, proper fields, Mu superclass.
 
+In the master branch also:
+* exact_arith: perl6-like exact integer arithmetic, but much faster.
+  Only promotes to bigint on overflows.
+
 Most of them only would have a chance to be merged upstream if a p5p
 committer would have written it.
 
