@@ -61,6 +61,12 @@ previous destructive behavior of changing a hash while iterating over
 it with C<use hashiter;>
 See L<[cperl #117]|https://github.com/perl11/cperl/issues/117>, cperl-only.
 
+=head2 HINTS_LOCALE_PARTIAL
+
+The scalarC< HINTS_LOCALE_PARTIAL> hints bit is gone, you need to look at
+the C<%^H> value. For backward compatibility the value of
+C<HINTS_LOCALE_PARTIAL> is now the same as C<HINTS_LOCALE>.
+
 =head1 Deprecations
 
 XXX Any deprecated features, syntax, modules etc. should be listed here.
