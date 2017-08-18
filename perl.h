@@ -5353,8 +5353,15 @@ END_EXTERN_C
 #define HINT_STRICT_REFS	0x00000002 /* strict pragma */
 #define HINT_LOCALE		0x00000004 /* locale pragma */
 #define HINT_BYTES		0x00000008 /* bytes pragma */
+<<<<<<< HEAD
 #define HINT_LOCALE_PARTIAL	0x00000004 /* ignored. was 0x10 categories subset */
 #define HINT_EXACT_ARITH	0x00000010 /* exact_arith pragma */
+||||||| merged common ancestors
+#define HINT_LOCALE_PARTIAL	0x00000010 /* locale, but a subset of categories */
+=======
+#define HINT_LOCALE_PARTIAL	0x00000004 /* ignored. was a subset of categories */
+#define HINT_EXACT_ARITH	0x00000010 /* exact_arith pragma */
+>>>>>>> locale: rearrange HINTS_LOCALE as suggested
 
 #define HINT_EXPLICIT_STRICT_REFS	0x00000020 /* strict.pm */
 #define HINT_EXPLICIT_STRICT_SUBS	0x00000040 /* strict.pm */
@@ -5952,9 +5959,16 @@ typedef struct am_table_short AMTS;
 #   define IN_LC_ALL_COMPILETIME   IN_LOCALE_COMPILETIME
 #   define IN_LC_ALL_RUNTIME       IN_LOCALE_RUNTIME
 
+<<<<<<< HEAD
 /* the next 5 are actually used */
 #   define IN_LC_PARTIAL_COMPILETIME   \
 	cBOOL(PL_hints & HINT_LOCALE_PARTIAL)
+||||||| merged common ancestors
+#   define IN_LC_PARTIAL_COMPILETIME   cBOOL(PL_hints & HINT_LOCALE_PARTIAL)
+=======
+#   define IN_LC_PARTIAL_COMPILETIME   \
+		cBOOL(PL_hints & HINT_LOCALE_PARTIAL)
+>>>>>>> locale: rearrange HINTS_LOCALE as suggested
 #   define IN_LC_PARTIAL_RUNTIME  \
         cBOOL(PL_curcop && CopHINTS_get(PL_curcop) & HINT_LOCALE_PARTIAL)
 

@@ -373,7 +373,14 @@ native types.
 Note that multidimensional arrays will be supported soon, using the
 same feature name. Similar to perl6.
 
+<<<<<<< HEAD
 This feature is available from cperl 5.22 onwards, and enabled by default.
+||||||| merged common ancestors
+This feature is available from cperl 5.22 onwards.
+=======
+This feature is available from cperl 5.22 onwards, and doesn't need to
+be turned on.
+>>>>>>> locale: rearrange HINTS_LOCALE as suggested
 
 =head2 The 'declared_refs' feature
 
