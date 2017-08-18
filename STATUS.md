@@ -152,6 +152,10 @@ For all versions see [bench-all/](bench-all/index.html)
 * hash slice consistency, no autovivification as sub args
 * no perl4 `'` package seperator, `'` is not expanded to `::`
 
+In the master branch also:
+* exact_arith: perl6-like exact integer arithmetic, but much faster.
+  Only promotes to bigint on overflows.
+
 Most of them only would have a chance to be merged upstream if a p5p
 committer would have written it.
 

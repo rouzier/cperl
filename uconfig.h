@@ -5413,6 +5413,7 @@
 /*#define	USE_SANITIZE_ADDRESS		/ **/
 #endif
 
+<<<<<<< HEAD
 /* USE_SAFE_HASHITER:
  *	This symbol, if defined, indicates that Perl disallows changes of
  *      hash keys during iteration. You need to permit it with use hashiter,
@@ -5426,10 +5427,16 @@
  *	This symbol, if defined, indicates that Perl can use exact_arith
  *      (i.e. Math::BigInt and the exact_arith pragma is available).
  */
+||||||| merged common ancestors
+/* PERL_EXACT_ARITH:
+ *	This symbol, if defined, indicates that Perl can use exact_arith
+ *      (i.e. Math::BigInt and the exact_arith pragma is available).
+ */
+=======
+>>>>>>> exact_arith: remove PERL_EXACT_ARITH
 /* USE_EXACT_ARITH:
  *	This symbol, if defined, indicates that Perl uses exact_arith by default.
  */
-#define PERL_EXACT_ARITH
 #ifndef USE_EXACT_ARITH
 /*#define	USE_EXACT_ARITH		/ **/
 #endif
@@ -5453,6 +5460,6 @@
 #endif
 
 /* Generated from:
- * bdbe9a8c3fc86e176e689658ddffa5e41759bdda2beb897fe41d58d8aa83f25b config_h.SH
+ * 0cdd57ff82ad983944e9a7ca8beef55cd35212c5737c112b3172ae03cd6e8bc7 config_h.SH
  * 1c0ae3e8a5605aeb478fe1e8a15b745a4c099c51e287e7192e44ebd6ed0f530a uconfig.sh
  * ex: set ro: */
