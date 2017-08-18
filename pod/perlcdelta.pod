@@ -36,6 +36,13 @@ L<perldiag/"Subroutine &%s::%s masks existing package %s::%s">
 and L<perldiag/"Subroutine &%s masks new package %s">.
 Use C<no warnings 'shadow';> to silence these new warnings.
 
+=head2 exact_arith
+
+Zero-overhead exact integer arithmetic with automatic promotion to
+L<Math::BigInt::GMP> or L<Math::BigInt> on integer overflows. Can be
+turned on globally via C<-Duseexactarith> or lexically via
+C<use exact_arith;>.
+
 =head1 Security
 
 XXX Any security-related notices go here.  In particular, any security
