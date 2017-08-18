@@ -5920,6 +5920,7 @@ typedef struct am_table_short AMTS;
 #  define IN_LC_PARTIAL_RUNTIME                                             \
               (PL_curcop && CopHINTS_get(PL_curcop) & HINT_LOCALE_PARTIAL)
 
+<<<<<<< HEAD
 /* Returns TRUE if the plain locale pragma without a parameter is in effect
  */
 #   define IN_LOCALE_RUNTIME                                                \
@@ -5964,6 +5965,53 @@ typedef struct am_table_short AMTS;
 #   define IN_LC(category)  \
         (IN_LC_COMPILETIME(category) || IN_LC_RUNTIME(category))
 
+||||||| merged common ancestors
+#  define IN_LC_COMPILETIME(category)                                       \
+       (       IN_LC_ALL_COMPILETIME                                        \
+        || (   IN_LC_PARTIAL_COMPILETIME                                    \
+            && Perl__is_in_locale_category(aTHX_ TRUE, (category))))
+#  define IN_LC_RUNTIME(category)                                           \
+      (IN_LC_ALL_RUNTIME || (IN_LC_PARTIAL_RUNTIME                          \
+                 && Perl__is_in_locale_category(aTHX_ FALSE, (category))))
+#  define IN_LC(category)  \
+                    (IN_LC_COMPILETIME(category) || IN_LC_RUNTIME(category))
+=======
+/* Returns TRUE if the plain locale pragma without a parameter is in effect
+ */
+#   define IN_LOCALE_RUNTIME	(PL_curcop \
+                                && CopHINTS_get(PL_curcop) & HINT_LOCALE)
+
+/* Returns TRUE if either form of the locale pragma is in effect */
+#   define IN_SOME_LOCALE_FORM_RUNTIME   \
+           cBOOL(CopHINTS_get(PL_curcop) & (HINT_LOCALE|HINT_LOCALE_PARTIAL))
+
+#   define IN_LOCALE_COMPILETIME	cBOOL(PL_hints & HINT_LOCALE)
+#   define IN_SOME_LOCALE_FORM_COMPILETIME \
+                          cBOOL(PL_hints & (HINT_LOCALE|HINT_LOCALE_PARTIAL))
+
+#   define IN_LOCALE \
+	(IN_PERL_COMPILETIME ? IN_LOCALE_COMPILETIME : IN_LOCALE_RUNTIME)
+#   define IN_SOME_LOCALE_FORM \
+	(IN_PERL_COMPILETIME ? IN_SOME_LOCALE_FORM_COMPILETIME \
+	                     : IN_SOME_LOCALE_FORM_RUNTIME)
+
+#   define IN_LC_ALL_COMPILETIME   IN_LOCALE_COMPILETIME
+#   define IN_LC_ALL_RUNTIME       IN_LOCALE_RUNTIME
+
+#   define IN_LC_PARTIAL_COMPILETIME   \
+		cBOOL(PL_hints & HINT_LOCALE_PARTIAL)
+#   define IN_LC_PARTIAL_RUNTIME  \
+               (PL_curcop && CopHINTS_get(PL_curcop) & HINT_LOCALE_PARTIAL)
+
+#   define IN_LC_COMPILETIME(category)                                       \
+       (IN_LC_ALL_COMPILETIME || (IN_LC_PARTIAL_COMPILETIME                  \
+                  && Perl__is_in_locale_category(aTHX_ TRUE, (category))))
+#   define IN_LC_RUNTIME(category)                                           \
+       (IN_LC_ALL_RUNTIME || (IN_LC_PARTIAL_RUNTIME                          \
+                  && Perl__is_in_locale_category(aTHX_ FALSE, (category))))
+#   define IN_LC(category)  \
+                    (IN_LC_COMPILETIME(category) || IN_LC_RUNTIME(category))
+>>>>>>> locale: rearrange HINTS_LOCALE as suggested
 
 #  if defined (PERL_CORE) || defined (PERL_IN_XSUB_RE)
 
