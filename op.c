@@ -3889,10 +3889,10 @@ S_maybe_multiconcat(pTHX_ OP *o)
 /*
 =for apidoc cv_check_inline
 
-examine an optree to determine whether it's in-lineable.
+Examine an optree to determine whether it's in-lineable.
 In contrast to op_const_sv allow short op sequences which are not
 constant folded.
-max 10 ops, no new pad, no intermediate return, no recursion, ...
+Max 10 ops, no new pad (?), no intermediate return, no recursion, ...
 no call-by-ref: $_[i] aelemfast(*_) or aelem rv2av or multideref($_[$x])
 TODO later: call-by-ref, new lexicals
 
@@ -3907,6 +3907,11 @@ TODO later: call-by-ref, new lexicals
 static bool
 S_cv_check_inline(pTHX_ const OP *o, CV *compcv)
 {
+#ifndef PERL_INLINE_SUBS
+    PERL_UNUSED_ARG(o);
+    PERL_UNUSED_ARG(compcv);
+    return FALSE;
+#else
     const OP *firstop = o;
     unsigned short i = 0;
     PADLIST *padlist;
@@ -3988,6 +3993,7 @@ S_cv_check_inline(pTHX_ const OP *o, CV *compcv)
 	}
     }
     return TRUE;
+#endif
 }
 #endif
 
@@ -11194,8 +11200,12 @@ S_op_const_sv(pTHX_ const OP *o, CV *cv, bool allow_lex)
 static OP*
 S_op_fixup(pTHX_ OP *old, OP *newop, U32 init) {
     static HV* cache = NULL;     /* { old => newop } */
-    U32 hash = INT2PTR(U32,(char*)old)>>4; /* not a good hash but enough for us,
-                                                OP* are unique during clone */
+    U32 hash;
+
+    GCC_DIAG_IGNORE(-Wpointer-to-int-cast) /* since gcc-4.1 */
+    hash = INT2PTR(U32,(char*)old)>>4; /* not a good hash but enough for us,
+                                          OP* are unique during clone */
+    GCC_DIAG_RESTORE
     if (!cache || (init == 1)) {
         if (cache) { /* sv_clear(cache); oops, the values are no SV's, the keys no char* */
             DEBUG_H(Perl_deb(aTHX_ "opcache clear\n"));
@@ -11304,6 +11314,7 @@ OP*
 Perl_op_clone_oplist(pTHX_ OP* o, OP* last, bool init) {
     OP *clone = NULL, *prev = NULL, * first = NULL;
     int pass2;
+    PERL_ARGS_ASSERT_OP_CLONE_OPLIST;
 
     op_fixup(NULL, NULL, init?1:0); /* init the fixup cache */
 
@@ -11415,6 +11426,7 @@ Perl_op_clone_oplist(pTHX_ OP* o, OP* last, bool init) {
     return first;
 }
 
+
 /* clones the underlying data, not the op.
  * TODO: finish
  */
@@ -11422,6 +11434,7 @@ Perl_op_clone_oplist(pTHX_ OP* o, OP* last, bool init) {
 static OP*
 S_op_clone_sv(pTHX_ OP* o) {
     const OPCODE type = o->op_type;
+    PERL_ARGS_ASSERT_OP_CLONE_SV
     switch (type) {
     case OP_GV:
     case OP_GVSV:
@@ -11438,7 +11451,7 @@ S_op_clone_sv(pTHX_ OP* o) {
 /*
 =for apidoc cv_do_inline
 
-needs to translate the args,
+Needs to translate the args to local pads.
   o:    pushmark
   cvop: entersub
 Splice inlined ENTERSUB into the current body.
@@ -11448,10 +11461,11 @@ with a OP_SIGNATURE it is easier. without need to populate @_.
 if arg is call-by-value make a copy.
 adjust or add targs,
 with local or eval{} or caller, entersub,  ... need to add ENTER/LEAVE,
-skip ENTER/LEAVE if certain ops are absent
+skip ENTER/LEAVE if certain ops are absent.
 
 $lhs = call(...); => $lhs = do {...inlined...};
 
+Only activated with PERL_INLINE_SUBS
 =cut
 */
 #ifdef PERL_INLINE_SUBS
@@ -21101,8 +21115,8 @@ Perl_rpeep(pTHX_ OP *o)
                                 }
                             }
                         }
-#endif
                     }
+#endif
                 }
             }
 

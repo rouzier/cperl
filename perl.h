@@ -2577,8 +2577,8 @@ typedef AV PAD;
 typedef struct padnamelist PADNAMELIST;
 typedef struct padname PADNAME;
 
-/* enable PERL_OP_PARENT by default. but not with inlined cperl yet */
-#if !defined(PERL_OP_PARENT) && !defined(PERL_NO_OP_PARENT) && !defined(USE_CPERL)
+/* enable PERL_OP_PARENT by default. */
+#if !defined(PERL_OP_PARENT) && !defined(PERL_NO_OP_PARENT)
 #  define PERL_OP_PARENT
 #endif
 
@@ -7516,6 +7516,8 @@ END_EXTERN_C
 #define PERL_GOTOSIG_TAILCALL
 
 #define MAX_NUMFIELDS 65536 /* U16_MAX */
+
+#undef  PERL_INLINE_SUBS /* */
 
 #undef croak_no_modify_sv
 #define croak_no_modify_sv(sv) Perl_croak_no_modify_sv(aTHX_ (SV*)sv,__FILE__,__LINE__)
