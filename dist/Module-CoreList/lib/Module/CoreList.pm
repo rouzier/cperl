@@ -15707,6 +15707,7 @@ our %delta = (
             'List::Util'            => '1.49_10',
             'List::Util::XS'        => '1.49_10',
             'PerlIO::via'           => '0.17_01',
+            'Opcode'                => '1.40_03c',
             'Scalar::Util'          => '1.49_10',
             'Sub::Util'             => '1.49_10',
             'Term::ReadKey'         => '2.37_02',
