@@ -300,3 +300,7 @@ PERLVAR(G, utf8_charname_continue, SV *)
 /* Everything that folds to a given character, for case insensitivity regex
  * matching */
 PERLVAR(G, utf8_foldclosures, SV *)
+
+#ifdef USE_OPPROF
+PERLVAR(G, opprof_io, PerlIO *)
+#endif
