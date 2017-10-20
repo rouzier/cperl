@@ -5025,6 +5025,7 @@ Perl_op_lvalue_flags(pTHX_ OP *o, I32 type, U32 flags)
     case OP_ANDASSIGN:
     case OP_ORASSIGN:
     case OP_DORASSIGN:
+    case OP_IASSIGN:
 	PL_modcount++;
 	break;
 
@@ -5057,7 +5058,7 @@ Perl_op_lvalue_flags(pTHX_ OP *o, I32 type, U32 flags)
 	    Perl_croak(aTHX_ "Can't localize lexical variable %" PNf,
 			      PNfARG(PAD_COMPNAME(o->op_targ)));
 	if (!(o->op_private & OPpLVAL_INTRO)
-	 || (  type != OP_SASSIGN && type != OP_AASSIGN
+	 || (  type != OP_SASSIGN && type != OP_AASSIGN && type != OP_IASSIGN
 	    && PadnameIsSTATE(PAD_COMPNAME_SV(o->op_targ))  ))
 	    S_mark_padname_lvalue(aTHX_ PAD_COMPNAME_SV(o->op_targ));
 	break;
@@ -5183,7 +5184,7 @@ Perl_op_lvalue_flags(pTHX_ OP *o, I32 type, U32 flags)
 	    op_lvalue(OpFIRST(o), OP_NULL);
 	    return o;
 	}
-	if (type != OP_AASSIGN && type != OP_SASSIGN
+	if (type != OP_AASSIGN && type != OP_SASSIGN && type != OP_IASSIGN
 	 && type != OP_ENTERLOOP)
 	    goto nomod;
 	/* Don’t bother applying lvalue context to the ex-list.  */
@@ -5236,7 +5237,7 @@ Perl_op_lvalue_flags(pTHX_ OP *o, I32 type, U32 flags)
     if (type != OP_LEAVESUBLV)
         o->op_flags |= OPf_MOD;
 
-    if (type == OP_AASSIGN || type == OP_SASSIGN)
+    if (type == OP_AASSIGN || type == OP_SASSIGN || type == OP_IASSIGN)
 	o->op_flags |= OPf_SPECIAL | (IS_SUB_OP(o) ? 0 : OPf_REF);
     else if (!type) { /* local() */
 	switch (localize) {
@@ -5872,6 +5873,8 @@ Do various compile-time assignments on const rhs values, to enable
 constant folding.
 my @a[] = (...) comes also here, setting the computed lhs AvSHAPED size.
 
+Try to optimize to IASSIGN with a lexical and a const IV < 128.
+
 Return the newASSIGNOP, or the folded assigned value.
 
 =cut
@@ -5982,9 +5985,18 @@ Perl_newASSIGNOP_maybe_const(pTHX_ OP *left, I32 optype, OP *right)
             SV *lsv = GvSV(gv);
             assert(IS_TYPE(OpFIRST(left), GV));
             if (SvTYPE(lsv) == SVt_NULL || SvTYPE(lsv) == SvTYPE(rsv)) {
-                DEBUG_k(Perl_deb(aTHX_ "our $%s :const = %s\n",
+                if (SvIOK(rsv) && abs(SvIVX(rsv)) < 128) {
+                    OpTYPE_set(left, OP_IASSIGN);
+                    optype = OP_IASSIGN;
+                    left->op_private = SvIVX(rsv);
+                    DEBUG_k(Perl_deb(aTHX_ "iassign: our $%s :const = %s\n",
                                  SvPEEK(lsv), SvPEEK(rsv)));
-                SvSetMagicSV(lsv, SvREFCNT_inc_NN(rsv));
+                    op_free(right);
+                } else {
+                    SvSetMagicSV(lsv, SvREFCNT_inc_NN(rsv));
+                    DEBUG_k(Perl_deb(aTHX_ "our $%s :const = %s\n",
+                                 SvPEEK(lsv), SvPEEK(rsv)));
+                }
                 SvREADONLY_on(lsv);
                 assign = ck_rvconst(left);
             }
@@ -14626,6 +14638,7 @@ S_op_check_type(pTHX_ OP* o, OP* left, OP* right, bool is_assign)
 /*
 =for apidoc ck_sassign
 CHECK callback for sassign (s2	S S	"(:Scalar,:Scalar):Scalar")
+and iassign (s0		"():Int")
 
 Esp. handles state var initialization and tries to optimize away the
 assignment for a lexical C<$_> via L</maybe_targlex>.
@@ -14661,6 +14674,21 @@ Perl_ck_sassign(pTHX_ OP *o)
 
     DEBUG_kv(Perl_deb(aTHX_ "ck_sassign: check types\n"));
     op_check_type(o, left, right, TRUE);
+
+    if (   IS_CONST_OP(right) && SvIOK(cSVOPx_sv(right))
+        && abs(SvIVX(cSVOPx_sv(right))) < 128
+        && IS_TYPE(left, PADSV))
+    {
+        /* sassign left const(IV) -> iassign */
+        DEBUG_kv(Perl_deb(aTHX_ "ck_sassign: => iassign\n"));
+        OpTYPE_set(o, OP_IASSIGN);
+        o->op_targ = OpLAST(o)->op_targ;
+        o->op_private = SvIVX(cSVOPx_sv(right));
+        o->op_flags &= ~(OPf_KIDS|OPf_STACKED);
+        op_free(left);
+        op_free(right);
+        return o;
+    }
     return S_maybe_targlex(aTHX_ o);
 }
 
@@ -21101,6 +21129,21 @@ Perl_rpeep(pTHX_ OP *o)
 	    break;
 
 	case OP_SASSIGN:
+#if 0
+            if (IS_CONST_OP(OpFIRST(o)) && SvIOK(cSVOPx_sv(OpFIRST(o)))
+                && abs(SvIVX(cSVOPx_sv(OpFIRST(o)))) < 128
+                && IS_TYPE(OpLAST(o), PADSV)) {
+                /* sassign left const(IV) -> iassign */
+                DEBUG_kv(Perl_deb(aTHX_ "rpeep: => iassign\n"));
+                OpTYPE_set(o, OP_IASSIGN);
+                o->op_targ = OpLAST(o)->op_targ;
+                o->op_private = SvIVX(cSVOPx_sv(OpFIRST(o)));
+                o->op_flags -= OPf_KIDS;
+                op_free(OpLAST(o));
+                op_free(OpFIRST(o));
+                oldop = NULL;
+            }
+#endif
 	    if (OP_GIMME_VOID(o)
                 || (IS_TYPE(OpNEXT(o), LINESEQ)
                     && (IS_TYPE(OpNEXT(OpNEXT(o)), LEAVESUB)
