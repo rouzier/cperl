@@ -127,6 +127,8 @@ END_EXTERN_C
 #define PL_XPosix_ptrs		(*Perl_GXPosix_ptrs_ptr(NULL))
 #undef  PL_appctx
 #define PL_appctx		(*Perl_Gappctx_ptr(NULL))
+#undef  PL_arenas_freed
+#define PL_arenas_freed		(*Perl_Garenas_freed_ptr(NULL))
 #undef  PL_check
 #define PL_check		(*Perl_Gcheck_ptr(NULL))
 #undef  PL_check_mutex
@@ -193,6 +195,8 @@ END_EXTERN_C
 #define PL_sig_trapped		(*Perl_Gsig_trapped_ptr(NULL))
 #undef  PL_sigfpe_saved
 #define PL_sigfpe_saved		(*Perl_Gsigfpe_saved_ptr(NULL))
+#undef  PL_sv_freed
+#define PL_sv_freed		(*Perl_Gsv_freed_ptr(NULL))
 #undef  PL_sv_placeholder
 #define PL_sv_placeholder	(*Perl_Gsv_placeholder_ptr(NULL))
 #undef  PL_thr_key
