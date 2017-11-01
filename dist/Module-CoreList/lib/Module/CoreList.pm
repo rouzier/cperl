@@ -17657,6 +17657,7 @@ our %delta :const = (
             'Errno'                 => '1.29_01',
             'hashiter'              => '0.02',
             'Storable'              => '3.11_02',
+            'Symbol'                => '1.08_02',
         },
         removed => {
         }

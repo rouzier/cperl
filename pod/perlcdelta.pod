@@ -156,6 +156,10 @@ Enable >2GB AvFILL check on store_hook (64bit)
 Too many references returned by STORABLE_freeze.
 It wrapped around previously. Fixes Coverity CID #187854.
 
+=item L<Symbol> 1.08_02
+
+Calls DynaLoader::dl_unload_file on XS modules for gc() support.
+
 =back
 
 =head2 Removed Modules and Pragmata
