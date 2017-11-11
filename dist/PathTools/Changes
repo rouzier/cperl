@@ -9,6 +9,10 @@ Revision history for Perl distribution PathTools.
 - [perl #132733] Skip cwd_enoent test on Cygwin
 - [perl #132651] Avoid infinite recursion in _perl_abs_path()
 
+4.69c - 2017-11-27 18:20:53 rurban
+- avoid loading modules repeatedly at runtime
+- replace 'use vars' by 'our'
+
 4.68c - 2017-04-28 14:43:14 rurban
 - Support getcwd with long paths.
 - Use libc realpath with possible long path support.
