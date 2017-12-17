@@ -4602,11 +4602,15 @@ S_finalize_op(pTHX_ OP* o)
              * (which is a list op. So pretend it wasn't a listop */
             if (type == OP_GLOB)
                 type = OP_NULL;
+#ifdef PERL_INLINE_SUBS
             else if (type == OP_FREED)
                 return; /* do not follow null'ed freed kids. yes it lives and it follows */
+#endif
         }
+#ifdef PERL_INLINE_SUBS
         else if (type == OP_FREED)
             return; /* freed kids neither (the ops between gv and entersub) */
+#endif
 
         family = PL_opargs[type] & OA_CLASS_MASK;
 
@@ -10630,7 +10634,7 @@ Perl_newFOROP(pTHX_ I32 flags, OP *sv, OP *expr, OP *block, OP *cont)
             if (SvIV(rightsv)-SvIV(leftsv) <= PERL_MAX_UNROLL_LOOP_COUNT) {
                 DEBUG_kv(Perl_deb(aTHX_ "TODO unroll loop (%" IVdf "..%" IVdf ")\n",
                                   SvIV(leftsv), SvIV(rightsv)));
-                /* TODO easy with op_clone_oplist from feature/gh23-inline-subs|feature/gh311-opclone */
+                /* TODO easy with op_clone_optree from feature/gh23-inline-subs|feature/gh311-opclone */
             }
 #endif
             optype = OP_ITER_LAZYIV;
@@ -11300,15 +11304,13 @@ S_op_fixup(pTHX_ OP *old, OP *newop, U32 init) {
 }
 
 /*
-=for apidoc op_clone_oplist
+=for apidoc op_clone_optree
 
 Clones just the op list/tree/graph, not the data.
 This is the opposite to C<cv_clone>, which clones that pads, but not the ops.
 If C<last> == NULL, clones the whole sub (i.e. tree), otherwise until C<last>.
 
 Relinks all ops inside this list, but not the ones outside.
-TODO: Walking by list will miss op_other LOGOP branches.
-We really should walk the tree (first, sibling).
 
 In the first pass visit and store all op_next pointers, and
 store all the locations of the to be fixed up other pointers,
@@ -11319,7 +11321,7 @@ C<init> = TRUE will re-initialize the op cache.
 
 Yes, this function is algorithmicly similar to a Garbage Collector.
 
-Note that when op_clone_oplist is called outside of the first compiler
+Note that when op_clone_optree is called outside of the first compiler
 passes, the ops will not be slabbed. The third rpeep pass is already
 to late.
 
@@ -11327,10 +11329,10 @@ to late.
 */
 
 OP*
-Perl_op_clone_oplist(pTHX_ OP* o, OP* last, bool init) {
+Perl_op_clone_optree(pTHX_ OP* o, OP* last, bool init) {
     OP *clone = NULL, *prev = NULL, * first = NULL;
     int pass2;
-    PERL_ARGS_ASSERT_OP_CLONE_OPLIST;
+    PERL_ARGS_ASSERT_OP_CLONE_OPTREE;
 
     op_fixup(NULL, NULL, init?1:0); /* init the fixup cache */
 
@@ -11450,7 +11452,7 @@ Perl_op_clone_oplist(pTHX_ OP* o, OP* last, bool init) {
                 break;
 
             default:
-                assert(0 && !"op_clone_oplist: missing OA_CLASS case");
+                assert(0 && !"op_clone_optree: missing OA_CLASS case");
             }
             if (!pass2) {
                 if (prev)
@@ -11512,7 +11514,7 @@ Only activated with PERL_INLINE_SUBS
 #ifdef PERL_INLINE_SUBS
 
 static OP*
-S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
+S_cv_do_inline(pTHX_ OP* parent, OP *o, OP *cvop, CV *cv)
 {
     OP *subop = (OP*)o;
     OP *firstop, *o2, *arg;
@@ -11594,15 +11596,16 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
         finalize_op(list); /* wrong parent */
         /*o->op_next = list;*/
     }
-    /* splice and fixup body, handle nextstate, skip and free the gv. */
-    /* we need to clone the optree, as we most likely change the state and args.
+
+    /* Splice and fixup body, handle nextstate, skip and free the gv. */
+    /* Clone the optree, as we most likely change the state and args.
        Note: cv_clone is useless for us. It clones the pad, but not
        the ops. We need to keep the pads, but clone the ops. */
-    o = op_clone_oplist(CvSTART(cv), NULL, TRUE);
+    o = op_clone_optree(CvROOT(cv), NULL, TRUE);
+    if (!o || !OpKIDS(o))
+        return NULL;
     firstop = o;
-    /* XXX! walking by list will miss op_other LOGOP branches.
-       we really should walk the tree (first-sibling) */
-    for (i=0,j=0; o && o->op_next; o = o->op_next) {
+    for (i=0, j=0, o=OpFIRST(o); o; o = OpKIDS(o) ? OpFIRST(o) : OpSIBLING(o)) {
         bool seen_logop = FALSE;
         OP *prev;
         const OPCODE type = o->op_type;
@@ -11639,6 +11642,10 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
         }
         if (OP_IS_LOGOP(o->op_type))
             seen_logop = TRUE;
+#if 0
+        /* XXX move to the end of the tree traversal.
+           i.e. firstop
+         */
         if (OP_TYPE_IS(o->op_next, OP_LEAVESUB)) {
             if (with_enter_leave) {
                 OP *kid;
@@ -11665,7 +11672,7 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
             o->op_next = cvop->op_next;
             break;
         }
-
+#endif
         /* TODO: Maybe cache this processed inlined variant in CvINLINE_CACHE(cv),
          * because such a cv is most likely inlined in multiple places.
          * But then we also need to store the following array of arg fixups.
@@ -11673,10 +11680,10 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
          */
 
         /* Try to splice in the args directly */
-        if (o->op_next && args > 0 && args <= 6) {
-            const OPCODE type = o->op_next->op_type;
+        if (OpHAS_SIBLING(o) && args > 0 && args <= 6) {
+            const OPCODE type = OpTYPE(OpSIBLING(o));
             prev = o;
-            o = o->op_next;
+            o = OpSIBLING(o);
 
             if (!optim_args) {
                 DEBUG_kv(Perl_deb(aTHX_ "rpeep: skip optim_args\n"));
@@ -11781,8 +11788,11 @@ S_cv_do_inline(pTHX_ OP *o, OP *cvop, CV *cv)
             optim_args = FALSE;
         }
     }
-    CvSTART(cv) = firstop;
-    CvROOT(cv) = LINKLIST(firstop);
+
+    /*CvSTART(cv) = LINKLIST(firstop);
+      CvROOT(cv) = firstop;*/
+    if (!o)
+        return firstop;
     if (!o->op_next || !with_enter_leave ) { /* LEAVESUB without ENTER */
         o->op_next = cvop->op_next;     /* skip and free entersub */
         cvop->op_flags &= ~OPf_KIDS;    /* keep em */
@@ -18156,7 +18166,7 @@ Perl_ck_subr(pTHX_ OP *o)
                     "ck_subr: skip inline sub %" SVf ", no inline\n",
                     SVfARG(cv_name(cv,NULL,CV_NAME_NOMAIN))));
             } else {
-                cv_do_inline(o, cvop, cv);
+                cv_do_inline(op_parent(o), o, cvop, cv);
             }
         }
 #endif
@@ -20147,7 +20157,7 @@ S_peep_leaveloop(pTHX_ BINOP* leave, OP* from, OP* to)
         if (SvIV(tosv)-SvIV(fromsv) <= PERL_MAX_UNROLL_LOOP_COUNT) {
             DEBUG_kv(Perl_deb(aTHX_ "rpeep: possibly unroll loop (%" IVdf "..%" IVdf ")\n",
                               SvIV(fromsv), SvIV(tosv)));
-            /* TODO op_clone_oplist from feature/gh23-inline-subs|feature/gh311-opclone */
+            /* TODO op_clone_optree from feature/gh23-inline-subs|feature/gh311-opclone */
         }
 #endif
         /* 2. Check all aelem if can aelem_u */
