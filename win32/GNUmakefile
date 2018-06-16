@@ -964,6 +964,7 @@ ifeq ($(CCTYPE),GCC)
 
 CFGSH_TMPL	= config.gc
 CFGH_TMPL	= config_H.gc
+PERLEXPLIB	= $(COREDIR)\libcperl.exp
 PERLIMPLIB	= $(COREDIR)\libcperl$(a)
 PERLIMPLIBBASE	= libcperl$(a)
 PERLSTATICLIB	= ..\libcperl$(PV)s$(a)
@@ -981,7 +982,7 @@ endif
 # only change when there is an incompatible revision of the public API.
 PERLIMPLIB	?= $(COREDIR)\cperl$(a)
 PERLIMPLIBBASE	?= cperl$(a)
-PERLEXPLIB	?= $(COREDIR)\cperl$(PV).exp
+PERLEXPLIB	?= $(COREDIR)\cperl.exp
 PERLSTATICLIB	?= ..\cperl$(PV)s$(a)
 PERLDLL		= ..\cperl$(PV).dll
 PERLDLLBASE	= cperl$(PV).dll
