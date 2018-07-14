@@ -271,13 +271,13 @@ _o,			T_INV,0,ALN64I"@@_o@@"
 afs,			T_INV,0,ALN64I"@@afs@@"
 afsroot,		T_INV,0,ALN64I"@@afsroot@@"
 alignbytes,		T_INV,0,ALN64I"@@alignbytes@@"
+ansi2knr,		T_INV,0,ALN64I"@@ansi2knr@@"
 aphostname,		T_INV,0,ALN64I"@@aphostname@@"
 api_revision,		T_INV,0,ALN64I"@@api_revision@@"
 api_subversion,		T_INV,0,ALN64I"@@api_subversion@@"
 api_version,		T_INV,0,ALN64I"@@api_version@@"
 api_versionstring,	T_INV,0,ALN64I"@@api_versionstring@@"
 ar,			T_INV,0,ALN64I"@@ar@@"
-arflags,		T_INV,0,ALN64I"@@arflags@@"
 archlib,		T_INV,0,ALN64I"@@archlib@@"
 archlibexp,		T_INV,0,ALN64I"@@archlibexp@@"
 archname,		T_INV,0,ALN64I"@@archname@@"
@@ -311,7 +311,6 @@ ccversion,		T_INV,0,ALN64I"@@ccversion@@"
 ccwarnflags,		T_INV,0,ALN64I"@@ccwarnflags@@"
 cf_by,			T_INV,0,ALN64I"@@cf_by@@"
 cf_email,		T_INV,0,ALN64I"@@cf_email@@"
-cf_epoch,		T_INV,0,ALN64I"@@cf_epoch@@"
 cf_time,		T_INV,0,ALN64I"@@cf_time@@"
 charbits,		T_INV,0,ALN64I"@@charbits@@"
 charsize,		T_INV,0,ALN64I"@@charsize@@"
@@ -396,7 +395,6 @@ d_PRIu64,		T_INV,0,ALN64I"@@d_PRIu64@@"
 d_PRIx64,		T_INV,0,ALN64I"@@d_PRIx64@@"
 d_SCNfldbl,		T_INV,0,ALN64I"@@d_SCNfldbl@@"
 d__fwalk,		T_INV,0,ALN64I"@@d__fwalk@@"
-d_accept4,		T_INV,0,ALN64I"@@d_accept4@@"
 d_access,		T_INV,0,ALN64I"@@d_access@@"
 d_accessx,		T_INV,0,ALN64I"@@d_accessx@@"
 d_acosh,		T_INV,0,ALN64I"@@d_acosh@@"
@@ -410,7 +408,6 @@ d_atanh,		T_INV,0,ALN64I"@@d_atanh@@"
 d_atolf,		T_INV,0,ALN64I"@@d_atolf@@"
 d_atoll,		T_INV,0,ALN64I"@@d_atoll@@"
 d_attribut,		T_INV,0,ALN64I"@@d_attribut@@"
-d_attribute_always_inline,	T_INV,0,ALN64I"@@d_attribute_always_inline@@"
 d_attribute_deprecated,	T_INV,0,ALN64I"@@d_attribute_deprecated@@"
 d_attribute_format,	T_INV,0,ALN64I"@@d_attribute_format@@"
 d_attribute_malloc,	T_INV,0,ALN64I"@@d_attribute_malloc@@"
@@ -418,22 +415,23 @@ d_attribute_nonnull,	T_INV,0,ALN64I"@@d_attribute_nonnull@@"
 d_attribute_noreturn,	T_INV,0,ALN64I"@@d_attribute_noreturn@@"
 d_attribute_pure,	T_INV,0,ALN64I"@@d_attribute_pure@@"
 d_attribute_unused,	T_INV,0,ALN64I"@@d_attribute_unused@@"
-d_attribute_used,	T_INV,0,ALN64I"@@d_attribute_used@@"
 d_attribute_warn_unused_result,	T_INV,0,ALN64I"@@d_attribute_warn_unused_result@@"
 d_backtrace,		T_INV,0,ALN64I"@@d_backtrace@@"
+d_bcmp,			T_INV,0,ALN64I"@@d_bcmp@@"
+d_bcopy,		T_INV,0,ALN64I"@@d_bcopy@@"
 d_bsd,			T_INV,0,ALN64I"@@d_bsd@@"
 d_bsdgetpgrp,		T_INV,0,ALN64I"@@d_bsdgetpgrp@@"
 d_bsdsetpgrp,		T_INV,0,ALN64I"@@d_bsdsetpgrp@@"
 d_builtin_arith_overflow,	T_INV,0,ALN64I"@@d_builtin_arith_overflow@@"
 d_builtin_choose_expr,	T_INV,0,ALN64I"@@d_builtin_choose_expr@@"
-d_builtin_clz,		T_INV,0,ALN64I"@@d_builtin_clz@@"
-d_builtin_ctz,		T_INV,0,ALN64I"@@d_builtin_ctz@@"
 d_builtin_expect,	T_INV,0,ALN64I"@@d_builtin_expect@@"
 d_builtin_prefetch,	T_INV,0,ALN64I"@@d_builtin_prefetch@@"
+d_bzero,		T_INV,0,ALN64I"@@d_bzero@@"
 d_c99_variadic_macros,	T_INV,0,ALN64I"@@d_c99_variadic_macros@@"
 d_casti32,		T_INV,0,ALN64I"@@d_casti32@@"
 d_castneg,		T_INV,0,ALN64I"@@d_castneg@@"
 d_cbrt,			T_INV,0,ALN64I"@@d_cbrt@@"
+d_charvspr,		T_INV,0,ALN64I"@@d_charvspr@@"
 d_chown,		T_INV,0,ALN64I"@@d_chown@@"
 d_chroot,		T_INV,0,ALN64I"@@d_chroot@@"
 d_chsize,		T_INV,0,ALN64I"@@d_chsize@@"
@@ -453,6 +451,7 @@ d_ctermid_r,		T_INV,0,ALN64I"@@d_ctermid_r@@"
 d_ctime64,		T_INV,0,ALN64I"@@d_ctime64@@"
 d_ctime_r,		T_INV,0,ALN64I"@@d_ctime_r@@"
 d_cuserid,		T_INV,0,ALN64I"@@d_cuserid@@"
+d_dbl_dig,		T_INV,0,ALN64I"@@d_dbl_dig@@"
 d_dbminitproto,		T_INV,0,ALN64I"@@d_dbminitproto@@"
 d_difftime,		T_INV,0,ALN64I"@@d_difftime@@"
 d_difftime64,		T_INV,0,ALN64I"@@d_difftime64@@"
@@ -464,18 +463,9 @@ d_dlerror,		T_INV,0,ALN64I"@@d_dlerror@@"
 d_dlopen,		T_INV,0,ALN64I"@@d_dlopen@@"
 d_dlsymun,		T_INV,0,ALN64I"@@d_dlsymun@@"
 d_dosuid,		T_INV,0,ALN64I"@@d_dosuid@@"
-d_double_has_inf,	T_INV,0,ALN64I"@@d_double_has_inf@@"
-d_double_has_nan,	T_INV,0,ALN64I"@@d_double_has_nan@@"
-d_double_has_negative_zero,	T_INV,0,ALN64I"@@d_double_has_negative_zero@@"
-d_double_has_subnormals,	T_INV,0,ALN64I"@@d_double_has_subnormals@@"
-d_double_style_cray,	T_INV,0,ALN64I"@@d_double_style_cray@@"
-d_double_style_ibm,	T_INV,0,ALN64I"@@d_double_style_ibm@@"
-d_double_style_ieee,	T_INV,0,ALN64I"@@d_double_style_ieee@@"
-d_double_style_vax,	T_INV,0,ALN64I"@@d_double_style_vax@@"
 d_drand48_r,		T_INV,0,ALN64I"@@d_drand48_r@@"
 d_drand48proto,		T_INV,0,ALN64I"@@d_drand48proto@@"
 d_dup2,			T_INV,0,ALN64I"@@d_dup2@@"
-d_dup3,			T_INV,0,ALN64I"@@d_dup3@@"
 d_duplocale,		T_INV,0,ALN64I"@@d_duplocale@@"
 d_eaccess,		T_INV,0,ALN64I"@@d_eaccess@@"
 d_endgrent,		T_INV,0,ALN64I"@@d_endgrent@@"
@@ -499,7 +489,6 @@ d_expm1,		T_INV,0,ALN64I"@@d_expm1@@"
 d_faststdio,		T_INV,0,ALN64I"@@d_faststdio@@"
 d_fchdir,		T_INV,0,ALN64I"@@d_fchdir@@"
 d_fchmod,		T_INV,0,ALN64I"@@d_fchmod@@"
-d_fchmodat,		T_INV,0,ALN64I"@@d_fchmodat@@"
 d_fchown,		T_INV,0,ALN64I"@@d_fchown@@"
 d_fcntl,		T_INV,0,ALN64I"@@d_fcntl@@"
 d_fcntl_can_lock,	T_INV,0,ALN64I"@@d_fcntl_can_lock@@"
@@ -539,10 +528,8 @@ d_fsync,		T_INV,0,ALN64I"@@d_fsync@@"
 d_ftello,		T_INV,0,ALN64I"@@d_ftello@@"
 d_ftime,		T_INV,0,ALN64I"@@d_ftime@@"
 d_futimes,		T_INV,0,ALN64I"@@d_futimes@@"
-d_gai_strerror,		T_INV,0,ALN64I"@@d_gai_strerror@@"
 d_gdbm_ndbm_h_uses_prototypes,	T_INV,0,ALN64I"@@d_gdbm_ndbm_h_uses_prototypes@@"
 d_gdbmndbm_h_uses_prototypes,	T_INV,0,ALN64I"@@d_gdbmndbm_h_uses_prototypes@@"
-d_get_current_dir_name,	T_INV,0,ALN64I"@@d_get_current_dir_name@@"
 d_getaddrinfo,		T_INV,0,ALN64I"@@d_getaddrinfo@@"
 d_getcwd,		T_INV,0,ALN64I"@@d_getcwd@@"
 d_getespwnam,		T_INV,0,ALN64I"@@d_getespwnam@@"
@@ -611,6 +598,7 @@ d_hypot,		T_INV,0,ALN64I"@@d_hypot@@"
 d_ilogb,		T_INV,0,ALN64I"@@d_ilogb@@"
 d_ilogbl,		T_INV,0,ALN64I"@@d_ilogbl@@"
 d_inc_version_list,	T_INV,0,ALN64I"@@d_inc_version_list@@"
+d_index,		T_INV,0,ALN64I"@@d_index@@"
 d_inetaton,		T_INV,0,ALN64I"@@d_inetaton@@"
 d_inetntop,		T_INV,0,ALN64I"@@d_inetntop@@"
 d_inetpton,		T_INV,0,ALN64I"@@d_inetpton@@"
@@ -641,13 +629,10 @@ d_lgamma_r,		T_INV,0,ALN64I"@@d_lgamma_r@@"
 d_libm_lib_version,	T_INV,0,ALN64I"@@d_libm_lib_version@@"
 d_libname_unique,	T_INV,0,ALN64I"@@d_libname_unique@@"
 d_link,			T_INV,0,ALN64I"@@d_link@@"
-d_linkat,		T_INV,0,ALN64I"@@d_linkat@@"
-d_llabs,		T_INV,0,ALN64I"@@d_llabs@@"
 d_llrint,		T_INV,0,ALN64I"@@d_llrint@@"
 d_llrintl,		T_INV,0,ALN64I"@@d_llrintl@@"
 d_llround,		T_INV,0,ALN64I"@@d_llround@@"
 d_llroundl,		T_INV,0,ALN64I"@@d_llroundl@@"
-d_localeconv_l,		T_INV,0,ALN64I"@@d_localeconv_l@@"
 d_localtime64,		T_INV,0,ALN64I"@@d_localtime64@@"
 d_localtime_r,		T_INV,0,ALN64I"@@d_localtime_r@@"
 d_localtime_r_needs_tzset,	T_INV,0,ALN64I"@@d_localtime_r_needs_tzset@@"
@@ -656,11 +641,6 @@ d_lockf,		T_INV,0,ALN64I"@@d_lockf@@"
 d_log1p,		T_INV,0,ALN64I"@@d_log1p@@"
 d_log2,			T_INV,0,ALN64I"@@d_log2@@"
 d_logb,			T_INV,0,ALN64I"@@d_logb@@"
-d_long_double_style_ieee,		T_INV,0,ALN64I"@@d_double_style_ieee@@"
-d_long_double_style_ieee_doubledouble,	T_INV,0,ALN64I"@@d_double_style_ieee_doubledouble@@"
-d_long_double_style_ieee_extended,	T_INV,0,ALN64I"@@d_double_style_ieee_extended@@"
-d_long_double_style_ieee_std,		T_INV,0,ALN64I"@@d_double_style_ieee_std@@"
-d_long_double_style_vax,		T_INV,0,ALN64I"@@d_double_style_vax@@"
 d_longdbl,		T_INV,0,ALN64I"@@d_longdbl@@"
 d_longlong,		T_INV,0,ALN64I"@@d_longlong@@"
 d_lrint,		T_INV,0,ALN64I"@@d_lrint@@"
@@ -673,16 +653,17 @@ d_madvise,		T_INV,0,ALN64I"@@d_madvise@@"
 d_malloc_good_size,	T_INV,0,ALN64I"@@d_malloc_good_size@@"
 d_malloc_size,		T_INV,0,ALN64I"@@d_malloc_size@@"
 d_mblen,		T_INV,0,ALN64I"@@d_mblen@@"
-d_mbrlen,		T_INV,0,ALN64I"@@d_mbrlen@@"
-d_mbrtowc,		T_INV,0,ALN64I"@@d_mbrtowc@@"
 d_mbstowcs,		T_INV,0,ALN64I"@@d_mbstowcs@@"
 d_mbtowc,		T_INV,0,ALN64I"@@d_mbtowc@@"
+d_memchr,		T_INV,0,ALN64I"@@d_memchr@@"
+d_memcmp,		T_INV,0,ALN64I"@@d_memcmp@@"
+d_memcpy,		T_INV,0,ALN64I"@@d_memcpy@@"
 d_memmem,		T_INV,0,ALN64I"@@d_memmem@@"
-d_memrchr,		T_INV,0,ALN64I"@@d_memrchr@@"
+d_memmove,		T_INV,0,ALN64I"@@d_memmove@@"
+d_memset,		T_INV,0,ALN64I"@@d_memset@@"
 d_mkdir,		T_INV,0,ALN64I"@@d_mkdir@@"
 d_mkdtemp,		T_INV,0,ALN64I"@@d_mkdtemp@@"
 d_mkfifo,		T_INV,0,ALN64I"@@d_mkfifo@@"
-d_mkostemp,		T_INV,0,ALN64I"@@d_mkostemp@@"
 d_mkstemp,		T_INV,0,ALN64I"@@d_mkstemp@@"
 d_mkstemps,		T_INV,0,ALN64I"@@d_mkstemps@@"
 d_mktime,		T_INV,0,ALN64I"@@d_mktime@@"
@@ -707,7 +688,6 @@ d_msync,		T_INV,0,ALN64I"@@d_msync@@"
 d_munmap,		T_INV,0,ALN64I"@@d_munmap@@"
 d_mymalloc,		T_INV,0,ALN64I"@@d_mymalloc@@"
 d_nan,			T_INV,0,ALN64I"@@d_nan@@"
-d_nanosleep,		T_INV,0,ALN64I"@@d_nanosleep@@"
 d_ndbm,			T_INV,0,ALN64I"@@d_ndbm@@"
 d_ndbm_h_uses_prototypes,	T_INV,0,ALN64I"@@d_ndbm_h_uses_prototypes@@"
 d_nearbyint,		T_INV,0,ALN64I"@@d_nearbyint@@"
@@ -716,7 +696,6 @@ d_nextafter,		T_INV,0,ALN64I"@@d_nextafter@@"
 d_nexttoward,		T_INV,0,ALN64I"@@d_nexttoward@@"
 d_nice,			T_INV,0,ALN64I"@@d_nice@@"
 d_nl_langinfo,		T_INV,0,ALN64I"@@d_nl_langinfo@@"
-d_thread_safe_nl_langinfo_l     T_INV,0,ALN64I"@@d_thread_safe_nl_langinfo_l@@"
 d_nv_preserves_uv,	T_INV,0,ALN64I"@@d_nv_preserves_uv@@"
 d_nv_zero_is_allbits_zero,	T_INV,0,ALN64I"@@d_nv_zero_is_allbits_zero@@"
 d_off64_t,		T_INV,0,ALN64I"@@d_off64_t@@"
@@ -724,13 +703,11 @@ d_old_pthread_create_joinable,	T_INV,0,ALN64I"@@d_old_pthread_create_joinable@@"
 d_oldpthreads,		T_INV,0,ALN64I"@@d_oldpthreads@@"
 d_oldsock,		T_INV,0,ALN64I"@@d_oldsock@@"
 d_open3,		T_INV,0,ALN64I"@@d_open3@@"
-d_openat,		T_INV,0,ALN64I"@@d_openat@@"
 d_pathconf,		T_INV,0,ALN64I"@@d_pathconf@@"
 d_pause,		T_INV,0,ALN64I"@@d_pause@@"
 d_perl_otherlibdirs,	T_INV,0,ALN64I"@@d_perl_otherlibdirs@@"
 d_phostname,		T_INV,0,ALN64I"@@d_phostname@@"
 d_pipe,			T_INV,0,ALN64I"@@d_pipe@@"
-d_pipe2,		T_INV,0,ALN64I"@@d_pipe2@@"
 d_poll,			T_INV,0,ALN64I"@@d_poll@@"
 d_portable,		T_INV,0,ALN64I"@@d_portable@@"
 d_prctl,		T_INV,0,ALN64I"@@d_prctl@@"
@@ -752,7 +729,6 @@ d_pwpasswd,		T_INV,0,ALN64I"@@d_pwpasswd@@"
 d_pwquota,		T_INV,0,ALN64I"@@d_pwquota@@"
 d_qgcvt,		T_INV,0,ALN64I"@@d_qgcvt@@"
 d_quad,			T_INV,0,ALN64I"@@d_quad@@"
-d_querylocale,		T_INV,0,ALN64I"@@d_querylocale@@"
 d_random_r,		T_INV,0,ALN64I"@@d_random_r@@"
 d_re_comp,		T_INV,0,ALN64I"@@d_re_comp@@"
 d_readdir,		T_INV,0,ALN64I"@@d_readdir@@"
@@ -760,18 +736,19 @@ d_readdir64_r,		T_INV,0,ALN64I"@@d_readdir64_r@@"
 d_readdir_r,		T_INV,0,ALN64I"@@d_readdir_r@@"
 d_readlink,		T_INV,0,ALN64I"@@d_readlink@@"
 d_readv,		T_INV,0,ALN64I"@@d_readv@@"
-d_realpath,		T_INV,0,ALN64I"@@d_realpath@@"
 d_recvmsg,		T_INV,0,ALN64I"@@d_recvmsg@@"
 d_regcmp,		T_INV,0,ALN64I"@@d_regcmp@@"
 d_regcomp,		T_INV,0,ALN64I"@@d_regcomp@@"
 d_remainder,		T_INV,0,ALN64I"@@d_remainder@@"
 d_remquo,		T_INV,0,ALN64I"@@d_remquo@@"
 d_rename,		T_INV,0,ALN64I"@@d_rename@@"
-d_renameat,		T_INV,0,ALN64I"@@d_renameat@@"
 d_rewinddir,		T_INV,0,ALN64I"@@d_rewinddir@@"
 d_rint,			T_INV,0,ALN64I"@@d_rint@@"
 d_rmdir,		T_INV,0,ALN64I"@@d_rmdir@@"
 d_round,		T_INV,0,ALN64I"@@d_round@@"
+d_safebcpy,		T_INV,0,ALN64I"@@d_safebcpy@@"
+d_safemcpy,		T_INV,0,ALN64I"@@d_safemcpy@@"
+d_sanemcmp,		T_INV,0,ALN64I"@@d_sanemcmp@@"
 d_sbrkproto,		T_INV,0,ALN64I"@@d_sbrkproto@@"
 d_scalbn,		T_INV,0,ALN64I"@@d_scalbn@@"
 d_scalbnl,		T_INV,0,ALN64I"@@d_scalbnl@@"
@@ -787,7 +764,6 @@ d_semget,		T_INV,0,ALN64I"@@d_semget@@"
 d_semop,		T_INV,0,ALN64I"@@d_semop@@"
 d_sendmsg,		T_INV,0,ALN64I"@@d_sendmsg@@"
 d_setegid,		T_INV,0,ALN64I"@@d_setegid@@"
-d_setenv,		T_INV,0,ALN64I"@@d_setenv@@"
 d_seteuid,		T_INV,0,ALN64I"@@d_seteuid@@"
 d_setgrent,		T_INV,0,ALN64I"@@d_setgrent@@"
 d_setgrent_r,		T_INV,0,ALN64I"@@d_setgrent_r@@"
@@ -849,6 +825,7 @@ d_socket,		T_INV,0,ALN64I"@@d_socket@@"
 d_socklen_t,		T_INV,0,ALN64I"@@d_socklen_t@@"
 d_sockpair,		T_INV,0,ALN64I"@@d_sockpair@@"
 d_socks5_init,		T_INV,0,ALN64I"@@d_socks5_init@@"
+d_sprintf_returns_strlen,	T_INV,0,ALN64I"@@d_sprintf_returns_strlen@@"
 d_sqrtl,		T_INV,0,ALN64I"@@d_sqrtl@@"
 d_srand48_r,		T_INV,0,ALN64I"@@d_srand48_r@@"
 d_srandom_r,		T_INV,0,ALN64I"@@d_srandom_r@@"
@@ -867,17 +844,18 @@ d_stdio_ptr_lval_sets_cnt,	T_INV,0,ALN64I"@@d_stdio_ptr_lval_sets_cnt@@"
 d_stdio_stream_array,	T_INV,0,ALN64I"@@d_stdio_stream_array@@"
 d_stdiobase,		T_INV,0,ALN64I"@@d_stdiobase@@"
 d_stdstdio,		T_INV,0,ALN64I"@@d_stdstdio@@"
+d_strchr,		T_INV,0,ALN64I"@@d_strchr@@"
 d_strcoll,		T_INV,0,ALN64I"@@d_strcoll@@"
-d_strerror_l,		T_INV,0,ALN64I"@@d_strerror_l@@"
+d_strctcpy,		T_INV,0,ALN64I"@@d_strctcpy@@"
+d_strerrm,		T_INV,0,ALN64I"@@d_strerrm@@"
+d_strerror,		T_INV,0,ALN64I"@@d_strerror@@"
 d_strerror_r,		T_INV,0,ALN64I"@@d_strerror_r@@"
 d_strftime,		T_INV,0,ALN64I"@@d_strftime@@"
 d_strlcat,		T_INV,0,ALN64I"@@d_strlcat@@"
 d_strlcpy,		T_INV,0,ALN64I"@@d_strlcpy@@"
-d_strnlen,		T_INV,0,ALN64I"@@d_strnlen@@"
 d_strtod,		T_INV,0,ALN64I"@@d_strtod@@"
 d_strtol,		T_INV,0,ALN64I"@@d_strtol@@"
 d_strtold,		T_INV,0,ALN64I"@@d_strtold@@"
-d_strtold_l,		T_INV,0,ALN64I"@@d_strtold_l@@"
 d_strtoll,		T_INV,0,ALN64I"@@d_strtoll@@"
 d_strtoq,		T_INV,0,ALN64I"@@d_strtoq@@"
 d_strtoul,		T_INV,0,ALN64I"@@d_strtoul@@"
@@ -913,7 +891,6 @@ d_ualarm,		T_INV,0,ALN64I"@@d_ualarm@@"
 d_umask,		T_INV,0,ALN64I"@@d_umask@@"
 d_uname,		T_INV,0,ALN64I"@@d_uname@@"
 d_union_semun,		T_INV,0,ALN64I"@@d_union_semun@@"
-d_unlinkat,		T_INV,0,ALN64I"@@d_unlinkat@@"
 d_unordered,		T_INV,0,ALN64I"@@d_unordered@@"
 d_unsetenv,		T_INV,0,ALN64I"@@d_unsetenv@@"
 d_uselocale,		T_INV,0,ALN64I"@@d_uselocale@@"
@@ -929,6 +906,8 @@ d_vms_case_sensitive_symbols,	T_INV,0,ALN64I"@@d_vms_case_sensitive_symbols@@"
 d_void_closedir,	T_INV,0,ALN64I"@@d_void_closedir@@"
 d_voidsig,		T_INV,0,ALN64I"@@d_voidsig@@"
 d_voidtty,		T_INV,0,ALN64I"@@d_voidtty@@"
+d_volatile,		T_INV,0,ALN64I"@@d_volatile@@"
+d_vprintf,		T_INV,0,ALN64I"@@d_vprintf@@"
 d_vsnprintf,		T_INV,0,ALN64I"@@d_vsnprintf@@"
 d_wait4,		T_INV,0,ALN64I"@@d_wait4@@"
 d_waitpid,		T_INV,0,ALN64I"@@d_waitpid@@"
@@ -944,7 +923,6 @@ db_prefixtype,		T_INV,0,ALN64I"@@db_prefixtype@@"
 db_version_major,	T_INV,0,ALN64I"@@db_version_major@@"
 db_version_minor,	T_INV,0,ALN64I"@@db_version_minor@@"
 db_version_patch,	T_INV,0,ALN64I"@@db_version_patch@@"
-default_inc_excludes_dot,	T_INV,0,ALN64I"@@default_inc_excludes_dot@@"
 defvoidused,		T_INV,0,ALN64I"@@defvoidused@@"
 direntrytype,		T_INV,0,ALN64I"@@direntrytype@@"
 dl_so_eq_ext,		T_INV,0,ALN64I"@@dl_so_eq_ext@@"
@@ -961,7 +939,6 @@ drand01,		T_INV,0,ALN64I"@@drand01@@"
 drand48_r_proto,	T_INV,0,ALN64I"@@drand48_r_proto@@"
 dtrace,			T_INV,0,ALN64I"@@dtrace@@"
 dtraceobject,		T_INV,0,ALN64I"@@dtraceobject@@"
-dtracexnolibs,		T_INV,0,ALN64I"@@dtracexnolibs@@"
 dynamic_ext,		T_INV,0,ALN64I"@@dynamic_ext@@"
 eagain,			T_INV,0,ALN64I"@@eagain@@"
 ebcdic,			T_INV,0,ALN64I"@@ebcdic@@"
@@ -980,12 +957,12 @@ expr,			T_INV,0,ALN64I"@@expr@@"
 extensions,		T_INV,0,ALN64I"@@extensions@@"
 extern_C,		T_INV,0,ALN64I"@@extern_C@@"
 extras,			T_INV,0,ALN64I"@@extras@@"
-fake_signatures,	T_INV,0,ALN64I"@@fake_signatures@@"
 fflushNULL,		T_INV,0,ALN64I"@@fflushNULL@@"
 fflushall,		T_INV,0,ALN64I"@@fflushall@@"
 find,			T_INV,0,ALN64I"@@find@@"
 firstmakefile,		T_INV,0,ALN64I"@@firstmakefile@@"
 flex,			T_INV,0,ALN64I"@@flex@@"
+found_libucb,		T_INV,0,ALN64I"@@found_libucb@@"
 fpossize,		T_INV,0,ALN64I"@@fpossize@@"
 fpostype,		T_INV,0,ALN64I"@@fpostype@@"
 freetype,		T_INV,0,ALN64I"@@freetype@@"
@@ -996,7 +973,6 @@ full_sed,		T_INV,0,ALN64I"@@full_sed@@"
 gccansipedantic,	T_INV,0,ALN64I"@@gccansipedantic@@"
 gccosandvers,		T_INV,0,ALN64I"@@gccosandvers@@"
 gccversion,		T_INV,0,ALN64I"@@gccversion@@"
-getcwdnull,		T_INV,0,ALN64I"@@getcwdnull@@"
 getgrent_r_proto,	T_INV,0,ALN64I"@@getgrent_r_proto@@"
 getgrgid_r_proto,	T_INV,0,ALN64I"@@getgrgid_r_proto@@"
 getgrnam_r_proto,	T_INV,0,ALN64I"@@getgrnam_r_proto@@"
@@ -1059,6 +1035,7 @@ i64type,		T_INV,0,ALN64I"@@i64type@@"
 i8size,			T_INV,0,ALN64I"@@i8size@@"
 i8type,			T_INV,0,ALN64I"@@i8type@@"
 i_arpainet,		T_INV,0,ALN64I"@@i_arpainet@@"
+i_assert,		T_INV,0,ALN64I"@@i_assert@@"
 i_bfd,			T_INV,0,ALN64I"@@i_bfd@@"
 i_bsdioctl,		T_INV,0,ALN64I"@@i_bsdioctl@@"
 i_crypt,		T_INV,0,ALN64I"@@i_crypt@@"
@@ -1070,6 +1047,7 @@ i_dlfcn,		T_INV,0,ALN64I"@@i_dlfcn@@"
 i_execinfo,		T_INV,0,ALN64I"@@i_execinfo@@"
 i_fcntl,		T_INV,0,ALN64I"@@i_fcntl@@"
 i_fenv,			T_INV,0,ALN64I"@@i_fenv@@"
+i_float,		T_INV,0,ALN64I"@@i_float@@"
 i_fp,			T_INV,0,ALN64I"@@i_fp@@"
 i_fp_class,		T_INV,0,ALN64I"@@i_fp_class@@"
 i_gdbm,			T_INV,0,ALN64I"@@i_gdbm@@"
@@ -1080,15 +1058,18 @@ i_ieeefp,		T_INV,0,ALN64I"@@i_ieeefp@@"
 i_inttypes,		T_INV,0,ALN64I"@@i_inttypes@@"
 i_langinfo,		T_INV,0,ALN64I"@@i_langinfo@@"
 i_libutil,		T_INV,0,ALN64I"@@i_libutil@@"
+i_limits,		T_INV,0,ALN64I"@@i_limits@@"
 i_locale,		T_INV,0,ALN64I"@@i_locale@@"
 i_machcthr,		T_INV,0,ALN64I"@@i_machcthr@@"
 i_malloc,		T_INV,0,ALN64I"@@i_malloc@@"
 i_mallocmalloc,		T_INV,0,ALN64I"@@i_mallocmalloc@@"
+i_math,			T_INV,0,ALN64I"@@i_math@@"
+i_memory,		T_INV,0,ALN64I"@@i_memory@@"
 i_mntent,		T_INV,0,ALN64I"@@i_mntent@@"
 i_ndbm,			T_INV,0,ALN64I"@@i_ndbm@@"
 i_netdb,		T_INV,0,ALN64I"@@i_netdb@@"
 i_neterrno,		T_INV,0,ALN64I"@@i_neterrno@@"
-i_netinet_in_systm,	T_INV,0,ALN64I"@@i_netinet_in_systm@@"
+i_netinet6_in6,		T_INV,0,ALN64I"@@i_netinet6_in6@@"
 i_netinet_ip,		T_INV,0,ALN64I"@@i_netinet_ip@@"
 i_netinet_ip6,		T_INV,0,ALN64I"@@i_netinet_ip6@@"
 i_netinettcp,		T_INV,0,ALN64I"@@i_netinettcp@@"
@@ -1103,9 +1084,12 @@ i_sfio,			T_INV,0,ALN64I"@@i_sfio@@"
 i_sgtty,		T_INV,0,ALN64I"@@i_sgtty@@"
 i_shadow,		T_INV,0,ALN64I"@@i_shadow@@"
 i_socks,		T_INV,0,ALN64I"@@i_socks@@"
+i_stdarg,		T_INV,0,ALN64I"@@i_stdarg@@"
 i_stdbool,		T_INV,0,ALN64I"@@i_stdbool@@"
+i_stddef,		T_INV,0,ALN64I"@@i_stddef@@"
 i_stdint,		T_INV,0,ALN64I"@@i_stdint@@"
 i_stdlib,		T_INV,0,ALN64I"@@i_stdlib@@"
+i_string,		T_INV,0,ALN64I"@@i_string@@"
 i_sunmath,		T_INV,0,ALN64I"@@i_sunmath@@"
 i_sysaccess,		T_INV,0,ALN64I"@@i_sysaccess@@"
 i_sysdir,		T_INV,0,ALN64I"@@i_sysdir@@"
@@ -1142,8 +1126,10 @@ i_time,			T_INV,0,ALN64I"@@i_time@@"
 i_unistd,		T_INV,0,ALN64I"@@i_unistd@@"
 i_ustat,		T_INV,0,ALN64I"@@i_ustat@@"
 i_utime,		T_INV,0,ALN64I"@@i_utime@@"
+i_values,		T_INV,0,ALN64I"@@i_values@@"
+i_varargs,		T_INV,0,ALN64I"@@i_varargs@@"
+i_varhdr,		T_INV,0,ALN64I"@@i_varhdr@@"
 i_vfork,		T_INV,0,ALN64I"@@i_vfork@@"
-i_wchar,		T_INV,0,ALN64I"@@i_wchar@@"
 i_xlocale,		T_INV,0,ALN64I"@@i_xlocale@@"
 ieeefp_h,		T_INV,0,ALN64I"@@ieeefp_h@@"
 ignore_versioned_solibs,	T_INV,0,ALN64I"@@ignore_versioned_solibs@@"
@@ -1295,6 +1281,7 @@ osvers,			T_INV,0,ALN64I"@@osvers@@"
 otherlibdirs,		T_INV,0,ALN64I"@@otherlibdirs@@"
 package,		T_INV,0,ALN64I"@@package@@"
 pager,			T_INV,0,ALN64I"@@pager@@"
+passcat,		T_INV,0,ALN64I"@@passcat@@"
 patchlevel,		T_INV,0,ALN64I"@@patchlevel@@"
 path_sep,		T_INV,0,ALN64I"@@path_sep@@"
 perl,			T_INV,0,ALN64I"@@perl@@"
@@ -1319,6 +1306,7 @@ prefixexp,		T_INV,0,ALN64I"@@prefixexp@@"
 privlib,		T_INV,0,ALN64I"@@privlib@@"
 privlibexp,		T_INV,0,ALN64I"@@privlibexp@@"
 procselfexe,		T_INV,0,ALN64I"@@procselfexe@@"
+prototype,		T_INV,0,ALN64I"@@prototype@@"
 pthread_h_first,	T_INV,0,ALN64I"@@pthread_h_first@@"
 ptrsize,		T_INV,0,ALN64I"@@ptrsize@@"
 quadkind,		T_INV,0,ALN64I"@@quadkind@@"
@@ -1338,7 +1326,6 @@ rm_try,			T_INV,0,ALN64I"@@rm_try@@"
 rmail,			T_INV,0,ALN64I"@@rmail@@"
 run,			T_INV,0,ALN64I"@@run@@"
 runnm,			T_INV,0,ALN64I"@@runnm@@"
-sanitize_address,	T_INV,0,ALN64I"@@sanitize_address@@"
 sGMTIME_max,		T_INV,0,ALN64I"@@sGMTIME_max@@"
 sGMTIME_min,		T_INV,0,ALN64I"@@sGMTIME_min@@"
 sLOCALTIME_max,		T_INV,0,ALN64I"@@sLOCALTIME_max@@"
@@ -1432,10 +1419,9 @@ stdio_filbuf,		T_INV,0,ALN64I"@@stdio_filbuf@@"
 stdio_ptr,		T_INV,0,ALN64I"@@stdio_ptr@@"
 stdio_stream_array,	T_INV,0,ALN64I"@@stdio_stream_array@@"
 strerror_r_proto,	T_INV,0,ALN64I"@@strerror_r_proto@@"
+strings,		T_INV,0,ALN64I"@@strings@@"
 submit,			T_INV,0,ALN64I"@@submit@@"
 subversion,		T_INV,0,ALN64I"@@subversion@@"
-sysincpth,		T_INV,0,ALN64I"@@sysincpth@@"
-syslibpth,		T_INV,0,ALN64I"@@syslibpth@@"
 sysman,			T_INV,0,ALN64I"@@sysman@@"
 sysroot,		T_INV,0,ALN64I"@@sysroot@@"
 tail,			T_INV,0,ALN64I"@@tail@@"
@@ -1517,6 +1503,7 @@ uvsize,			T_INV,0,ALN64I"@@uvsize@@"
 uvtype,			T_INV,0,ALN64I"@@uvtype@@"
 uvuformat,		T_INV,0,ALN64I"@@uvuformat@@"
 uvxformat,		T_INV,0,ALN64I"@@uvxformat@@"
+vaproto,		T_INV,0,ALN64I"@@vaproto@@"
 vendorarch,		T_INV,0,ALN64I"@@vendorarch@@"
 vendorarchexp,		T_INV,0,ALN64I"@@vendorarchexp@@"
 vendorbin,		T_INV,0,ALN64I"@@vendorbin@@"
@@ -1554,12 +1541,10 @@ PROTOTYPES: DISABLE
 BOOT:
 {
   STATIC_ASSERT_STMT(sizeof(stringpool_contents) <= 1 << 15);
-#ifndef _MSC_VER /* MSVC packing?  Fails on my MSVC110FREE WIN64 box */
-# if PTRSIZE == 8
+#if PTRSIZE == 8
   STATIC_ASSERT_STMT(sizeof(struct Perl_Config) == 16);
-# else
+#else
   STATIC_ASSERT_STMT(sizeof(struct Perl_Config) == 8);
-# endif
 #endif
 #if BYTEORDER == 0x4321 || BYTEORDER == 0x87654321  /* big-endian */
 /* an inline string better be negative on BE */
@@ -1632,13 +1617,13 @@ PPCODE:
      SP++; /* make space for 1 returned SV* */
      PUTBACK; /* let some vars go out of liveness */
 #if Size_t_size > INTSIZE
-     if (SvCUR(key) > UINT_MAX)
-         XSRETURN_UNDEF;
+     if(SvCUR(key) > UINT_MAX)
+         goto return_undef;
 #endif
      c = Config_lookup(SvPVX_const(key), (unsigned int)SvCUR(key));
      PERL_UNUSED_VAR(self);
      if (!c)
-         XSRETURN_UNDEF;
+         goto return_undef;
      if (ix == 0) { /* is FETCH */
        if (c->type == T_INT) {
           IV iv;
@@ -1660,49 +1645,49 @@ PPCODE:
            RETVAL = sv_2mortal(RETVAL);
        }
        else { /* c->type == T_STR */
-           if (c->len) {
+          if (c->len) {
 /* C bitfield endianness is UB, so pack our own bits */
 #if BYTEORDER == 0x4321 || BYTEORDER == 0x87654321  /* big-endian */
-               I16 len = (I16)c->len;
-               if (len < 0)
-                   RETVAL = my_newSVstaticpvn(aTHX_ (char*)(&(c->len))+1, (len >> 8) & 0x7F);
+              I16 len = (I16)c->len;
+              if (len < 0)
+                RETVAL = my_newSVstaticpvn(aTHX_ (char*)(&(c->len))+1, (len >> 8) & 0x7F);
 #else /* little-endian */
-               /* if we had access to x86 carry flag or very smart CC, the
-                * "len >> 1" and "if (c->len & 0x1)" would be one shr op, then a
-                * jump carry flag op, not 4 ops (mov, shr, test, jz) */
-               unsigned int len = c->len >> 1;
-               if (c->len & 0x1)
-                   /*  &0x7F is effectivly a casting of len to U8 before shift,
-                    *  otherwise lowest bit from 1st string char (high byte of U16
-                    *  len) becomes part of len, aka a gibberish bit and a
-                    *  SEGV/overflow inside memcpy inside newSVpvn_flags */
-                   RETVAL = my_newSVstaticpvn(aTHX_ (char*)(&(c->len))+1, len & 0x7F);
+            /* if we had access to x86 carry flag or very smart CC, the
+             * "len >> 1" and "if (c->len & 0x1)" would be one shr op, then a
+             * jump carry flag op, not 4 ops (mov, shr, test, jz) */
+              unsigned int len = c->len >> 1;
+              if (c->len & 0x1)
+                /*  &0x7F is effectivly a casting of len to U8 before shift,
+                 *  otherwise lowest bit from 1st string char (high byte of U16
+                 *  len) becomes part of len, aka a gibberish bit and a
+                 *  SEGV/overflow inside memcpy inside newSVpvn_flags */
+                RETVAL = my_newSVstaticpvn(aTHX_ (char*)(&(c->len))+1, len & 0x7F);
 #endif
-               else
-                   RETVAL = my_newSVstaticpvn(aTHX_ c->value, len);
-           } else {
-               IV val = PTR2IV(c->value);
-               switch (val) {
-               case VUNDEF:
-                   RETVAL = &PL_sv_undef;
-                   break;
-               case VEMPTY:
-                   RETVAL = &PL_sv_no;
-                   break;
-               case VDEFINE: {/* this SV * never goes away once vivified */
+              else
+                RETVAL = my_newSVstaticpvn(aTHX_ c->value, len);
+          } else {
+                switch((size_t)c->value) {
+                     case (size_t)VUNDEF:
+                     return_undef:
+                          RETVAL = &PL_sv_undef;
+                          break;
+                     case (size_t)VEMPTY:
+                          RETVAL = &PL_sv_no;
+                          break;
+                     case (size_t)VDEFINE: {/* this SV * never goes away once vivified */
 #ifdef USE_CPERL
-                   RETVAL = SV_CONST(define);
+                          RETVAL = SV_CONST(define);
 #else
-                   dMY_CXT;
-                   RETVAL = MY_CXT.defineSV;
+                          dMY_CXT;
+                          RETVAL = MY_CXT.defineSV;
 #endif
+                    }
+                         break;
+                    default:
+                         NOT_REACHED; /* NOTREACHED */
                }
-                   break;
-               default:
-                   NOT_REACHED; /* NOTREACHED */
-               }
-           }
-       }
+          }
+      }
      } /* is FETCH */
      else /* is EXISTS */
         RETVAL = &PL_sv_yes;

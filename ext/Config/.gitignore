@@ -1,3 +1,5 @@
+#THIS FILE IS DIFFERENT FROM THE CPAN .gitignore
+#build products
 ppcfg.txt
 xscfg.txt
 cfg.diff
@@ -8,3 +10,15 @@ Config_xs.tmp.in-new
 Config.xs
 UNINST_0
 UNINST_1
+#files from CPAN distro not shipped in core
+.travis.yml
+appveyor.yml
+Changes
+Config_mini.pl.PL
+Config_xs_heavy.pl.PL
+genkeys.PL
+MANIFEST
+README
+regen
+xsc_test.pl
+XSConfig.pod
