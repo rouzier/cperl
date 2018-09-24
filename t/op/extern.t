@@ -105,8 +105,11 @@ $c="c"; sub abs(int $i) :native($c) :int;
 check_abs("abs :native(\$name)");
 #}
 
-extern sub strchr(str $s, int $i) :str;
-is(strchr("abcd", ord("c")), "cd", "strchr");
+TODO: {
+  local $TODO = "CvTYPE_set comppad_names mixup";
+  extern sub strchr(str $s, int $i) :str;
+  is(strchr("abcd", ord("c")), "cd", "strchr");
+}
 
 # check ffi fields without calling the ffi (wrong sig or rettype)
 # These destroy labs() so do it at last
