@@ -19886,6 +19886,7 @@ Set the return type of a sub.
 When the padnames are still the default compile-time comppad_name,
 then we have to clone it to be able to set private [0] types for each subroutine,
 to avoid to overwrite them each other.
+If it's a private CvPADLIST already don't clone it.
 
 =cut
  */
@@ -19895,13 +19896,16 @@ void Perl_cv_type_set(pTHX_ CV *cv, HV *stash)
     PERL_ARGS_ASSERT_CV_TYPE_SET;
 
     pnl = PadlistNAMES(CvPADLIST(cv));
-    if (pnl == PL_comppad_name &&
-        (SV*)PadnamelistARRAY(pnl)[0] != (SV*)stash)
-    {
+    if ((pnl == PL_comppad_name || PadnamelistREFCNT(pnl) > 1) &&
+        ((SV*)PadnamelistARRAY(pnl)[0] != (SV*)stash)) {
+        DEBUG_X(PerlIO_printf(Perl_debug_log, "cv_type_set cv=%p, %s (cloned %s)\n",
+                              cv, HvNAME(stash),
+                              pnl == PL_comppad_name ? "comppad_name" : "refcnt"));
         pnl = cv_clone_padnames(cv, pnl);
+    } else {
+        DEBUG_X(PerlIO_printf(Perl_debug_log, "cv_type_set cv=%p, %s\n", cv, HvNAME(stash)));
     }
     PadnameTYPE_set(PadnamelistARRAY(pnl)[0], stash);
-    DEBUG_X(PerlIO_printf(Perl_debug_log, "cv_type_set cv=%p, %s\n", cv, HvNAME(stash)));
 }
 
 
