@@ -4170,12 +4170,10 @@ void
 Perl_padlist_dump(pTHX_ PADLIST * padl)
 {
     PerlIO* file = Perl_debug_log;
-    PADNAMELIST *pnl;
     PAD* pl;
     SSize_t i, j, max;
     if (!padl)
         return;
-    pnl = PadlistNAMES(padl);
     pl  = PadlistARRAY(padl)[1];
     max = PadlistMAX(padl);
     Perl_dump_indent(aTHX_ 0, file, "PADLIST 0x%" UVxf "\n", PTR2UV(padl));
@@ -4184,6 +4182,7 @@ Perl_padlist_dump(pTHX_ PADLIST * padl)
     Perl_dump_indent(aTHX_ 1, file, "OUTID = %u\n", (unsigned)padl->xpadl_outid);
     Perl_dump_indent(aTHX_ 1, file, "ARRAY = 0x%" UVxf "\n", PTR2UV(PadlistARRAY(padl)));
     if (max == 1) {
+        PADNAMELIST *pnl = PadlistNAMES(padl);
         /* list the pads on the right side, col 40 if max == 1 (no cv recursion) */
         PADNAME **pnp = PadnamelistARRAY(pnl);
         Perl_dump_indent(aTHX_ 0, file, "PADNAMELIST 0x%" UVxf "%s\n",
@@ -4194,14 +4193,14 @@ Perl_padlist_dump(pTHX_ PADLIST * padl)
         Perl_dump_indent(aTHX_ 0, file, "ARRAY = 0x%" UVxf "\n", PTR2UV(*pnp));
         if (pnp) {
             SV** padp = AvARRAY(pl);
-            max = PadnamelistMAX(pnl) > AvFILLp(pl) ? PadnamelistMAX(pnl) : AvFILLp(pl);
-            for (i = 0; i <= max; i++) {
+            for (i = 0; i <= PadnamelistMAX(pnl); i++) {
                 Perl_dump_indent(aTHX_ 1, file, "[%2u]: %-38s | %s\n",
                                  (unsigned)i, Perl_pn_peek_short(aTHX_ pnp[i]),
                                  sv_peek(padp[i]));
             }
         }
-    } else {
+    } else if (max > 1) {
+        PADNAMELIST *pnl = PadlistNAMES(padl);
         Perl_pnl_dump(aTHX_ pnl);
         if (!pl) return;
         for (i = 1; i <= max; i++) {
